@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/trans_t"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="290dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/dialog_shar_bg"
+
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/dialog_top_bg">
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:text="取消"
+                android:textColor="#1d9ff0"/>
+
+            <TextView
+                android:id="@+id/tv_determine"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:gravity="center_vertical|right"
+                android:text="确定"
+                android:textColor="#1d9ff0"/>
+        </RelativeLayout>
+
+        <include layout="@layout/layout_date_pick"/>
+    </LinearLayout>
+</LinearLayout>

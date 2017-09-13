@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RoundFilletProcess">
+        <attr name="roundColor" format="color"/>
+        <attr name="roundProgressColor" format="color"/>
+        <attr name="textColor" format="color"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="text" format="string"/>
+        <attr name="chart_round" format="boolean"/>
+
+    </declare-styleable>
+    <declare-styleable name="RoundShadowProcess">
+        <attr name="s_roundColor" format="color"/>
+        <attr name="s_roundProgressColor" format="color"/>
+        <attr name="s_textColor" format="color"/>
+        <attr name="s_textSize" format="dimension"/>
+        <attr name="s_text" format="string"/>
+    </declare-styleable>
+</resources>

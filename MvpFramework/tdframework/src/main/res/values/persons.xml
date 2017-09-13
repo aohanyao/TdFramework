@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="listpersons">
+        <item> 马云</item>
+        <item> 马化腾</item>
+        <item> 佩兰</item>
+        <item> 奥巴马</item>
+        <item> 普京</item>
+        <item> 金三胖</item>
+        <item> 金克拉</item>
+        <item> 利亚克</item>
+        <item> 南山南</item>
+    </string-array>
+</resources>

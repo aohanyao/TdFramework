@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_share"
+    android:background="?android:selectableItemBackground"
+    style="@style/ShareAppLainearStyle">
+
+    <ImageView
+        android:id="@+id/iv_share_img"
+        style="@style/ShareAppImageStyle"
+        android:src="@mipmap/share_firend_icon" />
+
+    <TextView
+        android:id="@+id/tv_share_text"
+        style="@style/ShareAppTextStyle"
+        android:text="微信朋友圈" />
+</LinearLayout>

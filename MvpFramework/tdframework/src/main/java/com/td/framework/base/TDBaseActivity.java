@@ -1,7 +1,6 @@
 package com.td.framework.base;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 
 import com.td.framework.R;
 import com.td.framework.global.app.AppManager;
-import com.td.framework.global.app.Constant;
 import com.td.framework.ui.swipebacklayout.SwipeBackLayout;
 import com.td.framework.ui.swipebacklayout.app.SwipeBackActivity;
 import com.td.framework.utils.DensityUtils;
@@ -286,59 +284,5 @@ public class TDBaseActivity extends SwipeBackActivity {
         slideLeftOut();
 
     }
-
-    /**
-     * 打开某个Activity  没有参数的
-     *
-     * @param toClass
-     */
-    protected void openActivity(Class<?> toClass) {
-        startActivity(new Intent(mActivity, toClass));
-        slideRightIn();
-    }
-
-    protected void openActivity(Intent toClass) {
-        startActivity(toClass);
-        slideRightIn();
-    }
-
-    /**
-     * 打开有返回值的Activity 无传递数据
-     *
-     * @param toClass
-     */
-    protected void openActivityForResult(Class<?> toClass) {
-        startActivityForResult(new Intent(mActivity, toClass), REQUEST_CODE);
-        slideRightIn();
-    }
-
-    protected void openActivityForResult(Class<? extends Activity> c, int requestCode, int data) {
-        Intent intent = new Intent(mActivity, c);
-        intent.putExtra(Constant.INTENT_DATA_KEY, data);
-        startActivityForResult(intent, requestCode);
-        slideRightIn();
-    }
-
-    protected void openActivityForResult(Class<? extends Activity> c, int requestCode, String data) {
-        Intent intent = new Intent(mActivity, c);
-        intent.putExtra(Constant.INTENT_DATA_KEY, data);
-        startActivityForResult(intent, requestCode);
-        slideRightIn();
-    }
-
-    protected void openActivityForResult(Intent intent, int requestCode) {
-        startActivityForResult(intent, requestCode);
-        slideRightIn();
-    }
-
-    protected void openActivityForResult(Class<? extends Activity> c, int requestCode) {
-        Intent intent = new Intent(mActivity, c);
-        startActivityForResult(intent, requestCode);
-        slideRightIn();
-    }
-
-
-
-
 
 }

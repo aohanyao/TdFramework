@@ -1,1 +1,1 @@
-include ':app', ':tdframework'
+include ':app', ':tdframework', 'library_net'

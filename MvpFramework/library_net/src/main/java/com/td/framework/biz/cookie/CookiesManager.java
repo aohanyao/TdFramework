@@ -1,7 +1,6 @@
 package com.td.framework.biz.cookie;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class CookiesManager implements CookieJar {
     }
 
     @Override
-    public List<Cookie> loadForRequest(@NonNull HttpUrl url) {
+    public List<Cookie> loadForRequest( HttpUrl url) {
         List<Cookie> cookies = cookieStore.get(url);
         return cookies;
     }

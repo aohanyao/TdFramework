@@ -5,7 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.td.framework.R;
 import com.td.framework.biz.ApiSubscriber;
 import com.td.framework.utils.T;

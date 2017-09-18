@@ -11,11 +11,8 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.CustGsonConverterFactory;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * 基类  API
@@ -97,7 +94,7 @@ public class BaseApi {
                     .client(getHttpClient())
                     .addConverterFactory(CustGsonConverterFactory.create());
             if (useRx) {
-                builder.addCallAdapterFactory(RxJavaCallAdapterFactory.create());
+                builder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
             }
             retrofit = builder.build();
         }
@@ -119,7 +116,7 @@ public class BaseApi {
                     .client(getHttpClient())
                     .addConverterFactory(CustGsonConverterFactory.create());
             if (useRx) {
-                builder.addCallAdapterFactory(RxJavaCallAdapterFactory.create());
+                builder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
             }
             retrofit = builder.build();
         }
@@ -199,19 +196,21 @@ public class BaseApi {
         return provider;
     }
 
-    /**
-     * 线程切换
-     *
-     * @return Transformer
-     */
-    public static <T> Observable.Transformer<T, T> getScheduler() {
-        return new Observable.Transformer<T, T>() {
-            @Override
-            public Observable<T> call(Observable<T> observable) {
-                return observable.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
-            }
-        };
-    }
+//    /**
+//     * 线程切换
+//     *
+//     * @return Transformer
+//     */
+//    public static <T> Observable<T> getScheduler() {
+//
+//
+//        return new Observable.Transformer<T, T>() {
+//            @Override
+//            public Observable<T> call(Observable<T> observable) {
+//                return observable.subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread());
+//            }
+//        };
+//    }
 
 }

@@ -32,9 +32,7 @@ abstract class BasePresenter<V>(val v: V) {
     //需要处理一些 统一的异常信息
     protected var TAG = javaClass.simpleName
     protected var disposable: Disposable? = null
-        set(value) {
-            disposable = value
-        }
+
 
     /**
      * 取消订阅

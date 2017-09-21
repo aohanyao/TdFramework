@@ -233,7 +233,7 @@ public class RoundFilletProcess extends View {
             }
         });
 
-        mAnimator.setDuration((long) (targetProgress * 33));
+        mAnimator.setDuration((long) (targetProgress * 15));
         mAnimator.start();
     }
 

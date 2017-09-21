@@ -19,9 +19,12 @@
         <attr name="on_text" format="string" />
         <attr name="on_text_color" format="color" />
         <attr name="off_text_color" format="color" />
-        <attr name="off_background_color" format="color" />
+        <attr name="background_color" format="color" />
         <attr name="on_background_color" format="color" />
+        <attr name="off_background_color" format="color" />
         <attr name="text_size" format="dimension" />
+        <attr name="radius" format="dimension" />
+        <attr name="front_ground_width" format="dimension" />
     </declare-styleable>
 
     <attr name="indexBarTextSize" format="dimension" />

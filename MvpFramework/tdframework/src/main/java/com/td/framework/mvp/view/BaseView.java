@@ -16,20 +16,34 @@
 
 package com.td.framework.mvp.view;
 
+import android.support.annotation.StringRes;
+
 import com.td.framework.biz.NetError;
 
 public interface BaseView {
     /**
      * 发生错误
+     *
      * @param error
      */
     void onFail(NetError error);
 
     /**
      * 完成
+     *
      * @param msg
      */
     void complete(String msg);
 
+    /**
+     * 显示
+     *
+     * @param msg
+     */
+    void showLoading(@StringRes int msg);
 
+    /**
+     * 显示空布局
+     */
+//    void showEmpty();
 }

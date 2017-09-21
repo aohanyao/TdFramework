@@ -8,8 +8,9 @@ import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.td.framework.base.TDBaseActivity;
+import com.td.framework.base.view.TDBaseActivity;
 import com.td.framework.biz.NetError;
+import com.td.framework.global.router.RouterBasePath;
 import com.td.framework.moudle.loding.DialogHelper;
 import com.td.framework.mvp.presenter.BasePresenter;
 
@@ -19,7 +20,7 @@ import com.td.framework.mvp.presenter.BasePresenter;
  * <p>Github https://github.com/aohanyao</p>
  */
 
-public abstract class MvpBaseActivity<P> extends TDBaseActivity
+public abstract class MvpBaseActivity<P > extends TDBaseActivity
         implements DialogInterface.OnCancelListener, DialogHelper.OnDialogConfirmListener {
     private P p;
     DialogHelper mDialogHelper;
@@ -28,7 +29,7 @@ public abstract class MvpBaseActivity<P> extends TDBaseActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         p = getP();
-        mDialogHelper = new DialogHelper(mActivity, this);
+        mDialogHelper = new DialogHelper(getMActivity(), this);
 
     }
 
@@ -81,13 +82,14 @@ public abstract class MvpBaseActivity<P> extends TDBaseActivity
                     @Override
                     public void onDialogConfirmListener(DialogInterface dialog) {
                         ARouter.getInstance()
-                                .build("/User/Login")
+                                .build(RouterBasePath.Login)
                                 .navigation();
                     }
                 });
             }
         } else {
             if (!TextUtils.isEmpty(message)) {
+
                 mDialogHelper.showMessageDialog(message);
             }
         }
@@ -131,7 +133,7 @@ public abstract class MvpBaseActivity<P> extends TDBaseActivity
     protected void showLoadingDialog(@StringRes int resId, boolean cancelable) {
         dismissDialog();
         //显示loading
-        showLoadingDialog(mActivity.getResources().getString(resId), cancelable);
+        showLoadingDialog(getMActivity().getResources().getString(resId), cancelable);
     }
 
     /**
@@ -167,9 +169,9 @@ public abstract class MvpBaseActivity<P> extends TDBaseActivity
                 ((BasePresenter) getP()).unSubscribe();
             }
         }
-        if (disposable != null) {
-            disposable.dispose();
-            disposable = null;
+        if (getSubscribe() != null) {
+            getSubscribe().dispose();
+            setSubscribe(null);
         }
     }
 
@@ -215,6 +217,16 @@ public abstract class MvpBaseActivity<P> extends TDBaseActivity
 
     public void complete(String msg) {
         handlerComplete(msg);
+    }
+
+    /**
+     * 显示弹窗
+     *
+     * @param msg
+     */
+    public void showLoading(@StringRes int msg) {
+        mDialogHelper.dismissDialog();
+        mDialogHelper.showLoadingDialog(getResources().getString(msg), true);
     }
 
     @Override

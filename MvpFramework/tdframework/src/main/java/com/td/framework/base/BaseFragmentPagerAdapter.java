@@ -33,6 +33,6 @@ public class BaseFragmentPagerAdapter extends android.support.v4.app.FragmentPag
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTitles != null || mTitles.length > position ? mTitles[position] : "";
+        return mTitles != null && mTitles.length > position ? mTitles[position] : "";
     }
 }

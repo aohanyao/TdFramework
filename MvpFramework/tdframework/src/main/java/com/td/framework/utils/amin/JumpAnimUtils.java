@@ -17,14 +17,26 @@ public class JumpAnimUtils {
      * @param activity
      */
     public static void jumpTo(Activity activity) {
-        activity.overridePendingTransition(R.anim.setup_next_in,
-                R.anim.setup_next_out);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            activity.getWindow().setExitTransition(new Explode());
+//            activity.getWindow().setEnterTransition(new Explode());
+//        }else{
+            activity.overridePendingTransition(R.anim.setup_next_in,
+                    R.anim.setup_next_out);
+//        }
+
     }
 
     /**
      * 退出动画
      */
     public static void out(Activity activity) {
-        activity.overridePendingTransition(R.anim.setup_pre_in, R.anim.setup_pre_out);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            activity.getWindow().setEnterTransition(new Explode());
+//            activity.getWindow().setExitTransition(new Explode());
+//        }else{
+            activity.overridePendingTransition(R.anim.setup_pre_in, R.anim.setup_pre_out);
+//        }
+
     }
 }

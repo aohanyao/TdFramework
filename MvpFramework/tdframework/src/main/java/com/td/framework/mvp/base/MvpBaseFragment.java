@@ -3,11 +3,13 @@ package com.td.framework.mvp.base;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.td.framework.base.TDBaseLoadingFragment;
+import com.td.framework.base.view.TDBaseLoadingFragment;
 import com.td.framework.biz.NetError;
+import com.td.framework.global.router.RouterBasePath;
 import com.td.framework.moudle.loding.DialogHelper;
 import com.td.framework.mvp.presenter.BasePresenter;
 
@@ -16,7 +18,7 @@ import com.td.framework.mvp.presenter.BasePresenter;
  * <p>Gihub https://github.com/aohanyao</p>
  * <p>MVPFramgnrt</p>
  */
-public abstract class MvpBaseFragment<P extends BasePresenter> extends TDBaseLoadingFragment implements DialogInterface.OnCancelListener, DialogHelper.OnDialogConfirmListener {
+public abstract class MvpBaseFragment<P> extends TDBaseLoadingFragment implements DialogInterface.OnCancelListener, DialogHelper.OnDialogConfirmListener {
     private P p;
     protected DialogHelper mDialogHelper;
 
@@ -24,14 +26,14 @@ public abstract class MvpBaseFragment<P extends BasePresenter> extends TDBaseLoa
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         p = getP();
-        mDialogHelper = new DialogHelper(mActivity, this);
+        mDialogHelper = new DialogHelper(getMActivity(), this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         try {
-            p.subscribe();
+            ((BasePresenter) p).subscribe();
         } catch (Exception ignored) {
         }
     }
@@ -40,7 +42,7 @@ public abstract class MvpBaseFragment<P extends BasePresenter> extends TDBaseLoa
     public void onDestroyView() {
         super.onDestroyView();
         try {
-            p.unSubscribe();
+            ((BasePresenter) p).subscribe();
         } catch (Exception ignored) {
         }
     }
@@ -93,8 +95,8 @@ public abstract class MvpBaseFragment<P extends BasePresenter> extends TDBaseLoa
                     @Override
                     public void onDialogConfirmListener(DialogInterface dialog) {
                         ARouter.getInstance()
-                                .build("/User/Login")
-                                .navigation();
+                                .build(RouterBasePath.Login)
+                                .navigation(getMActivity(), NetError.LOGIN_OUT);
                     }
                 });
             }
@@ -133,11 +135,20 @@ public abstract class MvpBaseFragment<P extends BasePresenter> extends TDBaseLoa
         handlerComplete(msg);
     }
 
+    /**
+     * 显示弹窗
+     *
+     * @param msg
+     */
+    public void showLoading(@StringRes int msg) {
+        mDialogHelper.dismissDialog();
+        mDialogHelper.showLoadingDialog(getResources().getString(msg), true);
+    }
     @Override
     public void onCancel(DialogInterface dialog) {
-        if (disposable != null) {
-            disposable.dispose();
-            disposable = null;
+        if (getSubscribe() != null) {
+            getSubscribe().dispose();
+            setSubscribe(null);
         }
     }
 

@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,15 +122,24 @@ public class SuspensionDecoration extends RecyclerView.ItemDecoration {
             //我记得Rv的item position在重置时可能为-1.保险点判断一下吧
             if (position > -1) {
                 if (position == 0) {//等于0肯定要有title的
-                    drawTitleArea(c, left, right, child, params, position);
+                    try {
+                        drawTitleArea(c, left, right, child, params, position);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 } else {//其他的通过判断
                     if (null != mDatas.get(position).getSuspensionTag() && !mDatas.get(position).getSuspensionTag().equals(mDatas.get(position - 1).getSuspensionTag())) {
                         //不为空 且跟前一个tag不一样了，说明是新的分类，也要title
-                        drawTitleArea(c, left, right, child, params, position);
+                        try {
+                            drawTitleArea(c, left, right, child, params, position);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     } else {//是否在这里绘制一些线？
                         //none
-                        //TODO item 中间的线
+                        //TODO 这是 item 中间的线 不是TODO
+                        //TAG
                         mPaint.setStrokeWidth(mLineSize);
                         mPaint.setColor(COLOR_CENTER_LINEA);
 //                        mPaint.setColor(Color.RED);
@@ -146,7 +154,11 @@ public class SuspensionDecoration extends RecyclerView.ItemDecoration {
         mPaint.setStrokeWidth(mLineSize);
         mPaint.setColor(0xffd6d6d6);
         View child = parent.getChildAt(childCount - 1);
-        c.drawLine(left , child.getTop() - mLineSize / 2f, right , child.getTop() - mLineSize / 2f, mPaint);
+        try {
+            c.drawLine(left, child.getTop() - mLineSize / 2f, right, child.getTop() - mLineSize / 2f, mPaint);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -159,7 +171,7 @@ public class SuspensionDecoration extends RecyclerView.ItemDecoration {
      * @param params
      * @param position
      */
-    private void drawTitleArea(Canvas c, int left, int right, View child, RecyclerView.LayoutParams params, int position) {//最先调用，绘制在最下层
+    private void drawTitleArea(Canvas c, int left, int right, View child, RecyclerView.LayoutParams params, int position)throws Exception {//最先调用，绘制在最下层
         ISuspensionInterface iSuspensionInterface = mDatas.get(position);
 //        L.e(position + "  :  " + iSuspensionInterface.getSuspensionTag());
         mPaint.setStyle(Paint.Style.FILL);
@@ -216,7 +228,7 @@ public class SuspensionDecoration extends RecyclerView.ItemDecoration {
         boolean flag = false;//定义一个flag，Canvas是否位移过的标志
         if ((pos + 1) < mDatas.size()) {//防止数组越界（一般情况不会出现）
             if (null != tag && !tag.equals(mDatas.get(pos + 1).getSuspensionTag())) {//当前第一个可见的Item的tag，不等于其后一个item的tag，说明悬浮的View要切换了
-                Log.d("zxt", "onDrawOver() called with: c = [" + child.getTop());//当getTop开始变负，它的绝对值，是第一个可见的Item移出屏幕的距离，
+                // Log.d("zxt", "onDrawOver() called with: c = [" + child.getTop());//当getTop开始变负，它的绝对值，是第一个可见的Item移出屏幕的距离，
                 if (child.getHeight() + child.getTop() < mTitleHeight) {//当第一个可见的item在屏幕中还剩的高度小于title区域的高度时，我们也该开始做悬浮Title的“交换动画”
                     c.save();//每次绘制前 保存当前Canvas状态，
                     flag = true;

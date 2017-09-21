@@ -44,7 +44,7 @@ public class KeyBoardUtils {
     public static void foucsString(EditText editText) {
         CharSequence text = editText.getText();
         //修改光标位置
-        if (text instanceof Spannable) {
+        if (text != null && text instanceof Spannable) {
             Spannable spanText = (Spannable) text;
             Selection.setSelection(spanText, text.length());
         }

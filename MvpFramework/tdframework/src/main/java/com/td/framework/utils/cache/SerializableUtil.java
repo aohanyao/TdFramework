@@ -32,6 +32,7 @@ public class SerializableUtil<T> {
      */
     public boolean saveSerializableObject(T serializable, String fileName) {
         File file = new File(mContext.getFilesDir().getAbsoluteFile() + File.separator + fileName);
+        L.e("保存成功："+file.getAbsolutePath());
         return saveSerializableObject(serializable, file);
     }
 
@@ -137,15 +138,15 @@ public class SerializableUtil<T> {
             if (!file.exists()) {
                 file.createNewFile();
             }
-            L.e(file.getAbsolutePath());
+            //L.e(file.getAbsolutePath());
             //取出数据
             fileInputStream = new FileInputStream(file.toString());
             objectInputStream = new ObjectInputStream(fileInputStream);
             return (T) objectInputStream.readObject();
 
-        } catch (Exception e) {
-            if (L.isDebug)
-                e.printStackTrace();
+        } catch (Exception e) {//为空的情况
+//            if (L.isDebug)
+//                e.printStackTrace();
             return null;
         }
     }
@@ -159,6 +160,11 @@ public class SerializableUtil<T> {
     public T getCache(String fileName) {
         //存入数据
         File file = new File(mContext.getFilesDir().getAbsoluteFile() + File.separator + "cache" + File.separator + fileName);
-        return getSerializable(file);
+        try {
+            return getSerializable(file);
+
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

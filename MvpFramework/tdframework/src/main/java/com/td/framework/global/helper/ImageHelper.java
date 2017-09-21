@@ -43,7 +43,7 @@ public class ImageHelper {
         try {
             myBitmap = Glide.with(mContext)
                     .load(url)
-                    .asBitmap() //必须
+                    .asBitmap() //must
                     .error(R.drawable.image_loading)
                     .placeholder(R.drawable.image_loading)
                     .centerCrop()
@@ -113,7 +113,7 @@ public class ImageHelper {
      * @param url
      * @param imageView
      */
-    public static void loadShopRundImage(final Context mContext, String url, final ImageView imageView) {
+    public static void loadShopRoundImage(final Context mContext, String url, final ImageView imageView) {
         Glide.with(mContext)
                 .load(url)
                 .asBitmap()
@@ -130,25 +130,44 @@ public class ImageHelper {
                     }
                 });
     }
-
+    public static void loadShopRoundImage(final Context mContext, int resid, final ImageView imageView) {
+        Glide.with(mContext)
+                .load(resid)
+                .asBitmap()
+                .error(R.mipmap.default_header)
+                .placeholder(R.mipmap.default_header)
+                .centerCrop()
+                .into(new BitmapImageViewTarget(imageView) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        imageView.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
+    }
     /**
      * 加载圆形的图像
      *
      * @param mContext
      * @param imageView
      */
-    public static void loadShopRundImage(final Context mContext, File file, final ImageView imageView) {
-        Glide.with(mContext).load(file).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView) {
-            @Override
-            protected void setResource(Bitmap resource) {
-                RoundedBitmapDrawable circularBitmapDrawable =
-                        RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
-                circularBitmapDrawable.setCircular(true);
-                imageView.setImageDrawable(circularBitmapDrawable);
-            }
-        });
+    public static void loadShopRoundImage(final Context mContext, File file, final ImageView imageView) {
+        Glide.with(mContext)
+                .load(file)
+                .asBitmap()
+                .centerCrop()
+                .into(new BitmapImageViewTarget(imageView) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        imageView.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
     }
-
 
 
     /**

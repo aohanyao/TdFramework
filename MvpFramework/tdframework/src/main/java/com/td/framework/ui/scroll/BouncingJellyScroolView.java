@@ -1,5 +1,6 @@
 package com.td.framework.ui.scroll;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
@@ -9,7 +10,11 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ScrollView;
 
 import com.nineoldandroids.view.ViewHelper;
+import com.td.framework.base.listener.BaseAnimatorListener;
 import com.td.framework.utils.ScreenUtils;
+import com.td.framework.utils.T;
+
+import java.util.Random;
 
 /**
  * <p>作者：江俊超 on 2016/8/30 14:42</p>
@@ -29,6 +34,7 @@ public class BouncingJellyScroolView extends ScrollView {
     private View childAt;
     private OnBouncingJellyListener onBouncingJellyListener;
     private boolean isBouncingJelly;
+    private Random mRandom;
 
     public BouncingJellyScroolView(Context context) {
         super(context);
@@ -38,6 +44,7 @@ public class BouncingJellyScroolView extends ScrollView {
     private void init() {
         bouncingOffset = ScreenUtils.getScreenHeight(getContext()) * 3;
         isBouncingJelly = true;
+        mRandom = new Random();
     }
 
     public BouncingJellyScroolView(Context context, AttributeSet attrs) {
@@ -69,6 +76,7 @@ public class BouncingJellyScroolView extends ScrollView {
         if (onBouncingJellyListener != null) {
             onBouncingJellyListener.onBouncingJellyTop(bouncingJelly);
         }
+
     }
 
     /**
@@ -168,6 +176,15 @@ public class BouncingJellyScroolView extends ScrollView {
                     bouncingTo();
                 } else {
                     bouncingBottom();
+                }
+            }
+
+        });
+        animator.addListener(new BaseAnimatorListener() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (mRandom.nextInt(1000) == mRandom.nextInt(1000)) {
+                    T.showToast(getContext(), "~~~~(>_<)~~~~");
                 }
             }
         });

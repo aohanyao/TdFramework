@@ -19,7 +19,7 @@
         android:paddingTop="30dp">
 
         <TextView
-            android:id="@+id/tv_phone_number"
+            android:id="@+id/tv_dialog_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
@@ -54,7 +54,7 @@
                 android:background="#e6e6e6" />
 
             <Button
-                android:id="@+id/btn_call"
+                android:id="@+id/btn_confirm"
                 android:background="@drawable/dialog_right_bg"
                 style="@style/DialogCallActionStyle"
                 android:text="呼叫" />

@@ -16,10 +16,13 @@
 
 package com.td.framework.mvp.presenter
 
+import com.td.framework.biz.ApiSubscriber
+import com.td.framework.mvp.view.BaseView
 import com.trello.rxlifecycle2.components.RxActivity
 import com.trello.rxlifecycle2.components.RxFragment
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle2.components.support.RxFragmentActivity
+import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -29,25 +32,31 @@ import io.reactivex.schedulers.Schedulers
  * 基类P
  */
 abstract class BasePresenter<V>(val v: V) {
-    //需要处理一些 统一的异常信息
-    protected var TAG = javaClass.simpleName
-    protected var disposable: Disposable? = null
-
-
+    protected var subscribe: Disposable? = null
     /**
      * 取消订阅
-     *
      *防止内存泄露
-     *
      * 用户取消网络请求
      */
     fun unSubscribe() {
         try {
-
-            disposable!!.dispose()
+            subscribe?.dispose()
         } catch (ignored: Exception) {
         }
+    }
 
+    /**
+     * 开始请求
+     */
+    protected fun <T> request(request: Flowable<T>, result: (T?) -> Unit) {
+        subscribe =request
+                .compose(this.getCompose())
+                .subscribeWith(object : ApiSubscriber<T>(v as BaseView) {
+                    override fun onNext(t: T?) {
+                        result.invoke(t)
+                    }
+
+                })
     }
 
     /**
@@ -57,29 +66,17 @@ abstract class BasePresenter<V>(val v: V) {
 
     }
 
-    /**
-     * 获取View相关视图
 
-     * @return
-     */
-    //     protected fun getV(): V {
-//        if (v !is BaseView) {
-//            throw RuntimeException("your V request extend BaseView")
-//        }
-//        return v
-//    }
+
 
     /**
-     *
      *  *  1. 线程切换
      *  *  2. Rx生命周期绑定
-     *
      * @return
      */
     protected fun <T> getCompose(): FlowableTransformer<T, T> {
         return FlowableTransformer { observable ->
-            observable
-                    .subscribeOn(Schedulers.io())
+            observable.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .compose<T>(when (v) {
                         is RxAppCompatActivity -> v.bindToLifecycle<T>()
@@ -90,5 +87,7 @@ abstract class BasePresenter<V>(val v: V) {
                         else -> (v as RxAppCompatActivity).bindToLifecycle<T>()
                     })
         }
+
     }
+
 }

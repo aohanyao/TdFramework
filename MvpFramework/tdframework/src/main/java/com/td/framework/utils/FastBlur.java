@@ -2,6 +2,9 @@ package com.td.framework.utils;
 
 import android.graphics.Bitmap;
 
+/**
+ * 高斯模糊算法工具
+ */
 public class FastBlur {
 
     public static Bitmap doBlur(Bitmap sentBitmap, int radius,

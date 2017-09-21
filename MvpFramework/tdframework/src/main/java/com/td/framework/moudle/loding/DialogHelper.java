@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.td.framework.R;
@@ -49,7 +50,7 @@ public class DialogHelper {
         View mDialogLoadingView = mInflater.inflate(R.layout.dialog_loading, null);
         TextView mTvDialogMessage = (TextView) mDialogLoadingView.findViewById(R.id.tv_loading_text);
         mTvDialogMessage.setText(msg);
-        mDialog = new AlertDialog.Builder(mActivity)
+        mDialog = new AlertDialog.Builder(mActivity,mStyle)
                 .setView(mDialogLoadingView)
                 .setCancelable(cancelable)
                 .setOnCancelListener(onCancelListener)
@@ -67,30 +68,33 @@ public class DialogHelper {
      */
     public void showMessageDialog(String message) {
         dismissDialog();
-        if (isUseAlert) {
-            //另外一种风格的提示窗  后期优化的时候可以启用
-//            Alerter.create(mActivity)
-//                    .setTitle("提示")
-//                    .setText(message)
-//                    .setBackgroundColor(R.color.color_alert)
-//                    .show();
-        } else {
+        View mMessageView = mInflater.inflate(R.layout.dialog_message, null);
+        //消息
+        TextView tvDialogMessage = (TextView) mMessageView.findViewById(R.id.tv_dialog_message);
+        if (tvDialogMessage != null) {
+            tvDialogMessage.setText(message);
+        }
+        //确认按钮
+        Button btnConfirm = (Button) mMessageView.findViewById(R.id.btn_confirm);
+        if (btnConfirm != null) {
+            btnConfirm.setText("确定");
+            btnConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismissDialog();
+                }
+            });
+        }
+        mDialog = new AlertDialog.Builder(mActivity, mStyle)
+                .setView(mMessageView)
+                .setCancelable(false)
+                .setOnCancelListener(onCancelListener)
+                .create();
 
-            mDialog = new AlertDialog.Builder(mActivity)
-                    // .setTitle("提示")
-                    .setMessage(message)
-                    .setCancelable(false)
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .create();
-            try {
-                mDialog.show();
-            } catch (Exception e) {
-            }
+        try {
+            mDialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -101,25 +105,38 @@ public class DialogHelper {
      */
     public void showMessageDialog(String message, @Nullable final OnDialogConfirmListener onDialogConfirmListener) {
         dismissDialog();
-
-        mDialog = new AlertDialog.Builder(mActivity)
-                // .setTitle("提示")
-                .setMessage(message)
-                .setCancelable(false)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (onDialogConfirmListener != null) {
-                            onDialogConfirmListener.onDialogConfirmListener(dialog);
-                        } else {
-                            dialog.dismiss();
-                        }
+        View mMessageView = LayoutInflater.from(mActivity).inflate(R.layout.dialog_message, null);
+        //消息
+        TextView tvDialogMessage = (TextView) mMessageView.findViewById(R.id.tv_dialog_message);
+        if (tvDialogMessage != null) {
+            tvDialogMessage.setText(message);
+        }
+        //确认按钮
+        Button btnConfirm = (Button) mMessageView.findViewById(R.id.btn_confirm);
+        if (btnConfirm != null) {
+            btnConfirm.setText("确定");
+            btnConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onDialogConfirmListener != null) {
+                        dismissDialog();
+                        onDialogConfirmListener.onDialogConfirmListener(mDialog);
+                    } else {
+                        dismissDialog();
                     }
-                })
+                }
+            });
+        }
+        mDialog = new AlertDialog.Builder(mActivity, mStyle)
+                .setView(mMessageView)
+                .setCancelable(false)
+                .setOnCancelListener(onCancelListener)
                 .create();
+
         try {
             mDialog.show();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -139,36 +156,53 @@ public class DialogHelper {
                                   @Nullable String cancelText,
                                   @Nullable final OnDialogConfirmListener onDialogConfirmListener,
                                   @Nullable final OnDialogCancelableListener onDialogCancelableListener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
         dismissDialog();
 
-        //  builder.setTitle(TextUtils.isEmpty(title) ? "提示" : title);
-        builder.setMessage(message);
-        builder.setPositiveButton(TextUtils.isEmpty(confirmText) ? "确定" : confirmText, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (onDialogConfirmListener != null) {
-                    onDialogConfirmListener.onDialogConfirmListener(dialog);
-                } else {
-                    dialog.dismiss();
+        View mConfirmView = mInflater.inflate(R.layout.dialog_confirm, null);
+
+        //消息
+        TextView tvDialogMessage = (TextView) mConfirmView.findViewById(R.id.tv_dialog_message);
+        if (tvDialogMessage != null) {
+            tvDialogMessage.setText(message);
+        }
+        //确认按钮
+        Button btnConfirm = (Button) mConfirmView.findViewById(R.id.btn_confirm);
+        if (btnConfirm != null) {
+            btnConfirm.setText(TextUtils.isEmpty(confirmText) ? "确定" : confirmText);
+            btnConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onDialogConfirmListener != null) {
+                        onDialogConfirmListener.onDialogConfirmListener(mDialog);
+                    } else {
+                        dismissDialog();
+                    }
                 }
-            }
-        });
-        builder.setNegativeButton(TextUtils.isEmpty(cancelText) ? "取消" : cancelText, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (onDialogCancelableListener != null) {
-                    onDialogCancelableListener.onDialogCancelableListener(dialog);
-                } else {
-                    dialog.dismiss();
+            });
+        }
+        //取消按钮
+        Button btnCancel = (Button) mConfirmView.findViewById(R.id.btn_cancel);
+        if (btnCancel != null) {
+            btnCancel.setText(TextUtils.isEmpty(cancelText) ? "取消" : cancelText);
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onDialogCancelableListener != null) {
+                        onDialogCancelableListener.onDialogCancelableListener(mDialog);
+                    } else {
+                        dismissDialog();
+                    }
                 }
-            }
-        });
-        mDialog = builder.create();
-        mDialog.setCancelable(false);
+            });
+        }
+        mDialog = new AlertDialog.Builder(mActivity, mStyle)
+                .setView(mConfirmView)
+                .setCancelable(false)
+                .setOnCancelListener(onCancelListener)
+                .create();
         try {
             mDialog.show();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -210,7 +244,7 @@ public class DialogHelper {
     /**
      * 弹窗取消
      */
-    public  interface OnDialogCancelableListener {
+    public interface OnDialogCancelableListener {
         void onDialogCancelableListener(DialogInterface dialog);
     }
 

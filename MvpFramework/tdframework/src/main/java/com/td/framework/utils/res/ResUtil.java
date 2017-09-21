@@ -1,6 +1,5 @@
 package com.td.framework.utils.res;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 
 import com.td.framework.global.app.App;
@@ -27,20 +26,18 @@ public class ResUtil {
 
     /**
      * 获取文字资源
-     * @param mContext
      * @param resStringId
      * @return
      */
-    public static String getResourcesString(Context mContext, int resStringId) {
+    public static String getResourcesString(int resStringId) {
         return App.newInstance().getResources().getString(resStringId);
     }
     /**
      * 获取Drawable
-     * @param mContext
      * @param resDrawableId
      * @return
      */
-    public static Drawable getResourcesDrawable(Context mContext, int resDrawableId) {
+    public static Drawable getResourcesDrawable(int resDrawableId) {
         Drawable mDistanceDrawable =  App.newInstance().getResources().getDrawable(resDrawableId);
         mDistanceDrawable.setBounds(0, 0, mDistanceDrawable.getMinimumWidth(), mDistanceDrawable.getMinimumHeight());
         return mDistanceDrawable;

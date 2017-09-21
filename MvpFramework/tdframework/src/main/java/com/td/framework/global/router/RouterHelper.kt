@@ -4,8 +4,11 @@ import android.app.Activity
 import android.os.Bundle
 import android.os.Parcelable
 import com.alibaba.android.arouter.facade.Postcard
+import com.alibaba.android.arouter.facade.callback.NavigationCallback
 import com.alibaba.android.arouter.launcher.ARouter
 import com.td.framework.R
+import com.td.framework.global.app.App
+import com.td.framework.utils.T
 import java.io.Serializable
 import java.util.*
 
@@ -15,8 +18,11 @@ import java.util.*
  * 版本:1.0.0
  * **说明**<br></br>
  *  * 路由帮助类
- **** */
-object RouterHelper {
+ * * 并不建议直接使用这个类
+ * */
+@Deprecated("Please do not use this class directly")
+object RouterHelper : NavigationCallback {
+
 
     /**
      * 跳转页面
@@ -29,9 +35,12 @@ object RouterHelper {
      */
     fun navigationActivity(path: String, mActivity: Activity) {
         buildRouter(path)
-                .navigation(mActivity)
+                .navigation(mActivity, this)
     }
-
+    fun navigationActivity(path: String) {
+        buildRouter(path)
+                .navigation()
+    }
     /**
      * 跳转页面，传递一个 Bundle 数据
 
@@ -47,7 +56,7 @@ object RouterHelper {
         } else {
             buildRouter(path)
                     .with(bundle)
-                    .navigation(mActivity)
+                    .navigation(mActivity, this)
         }
     }
 
@@ -62,7 +71,7 @@ object RouterHelper {
      */
     fun navigationActivityForResult(path: String, mActivity: Activity, requestCode: Int) {
         buildRouter(path)
-                .navigation(mActivity, requestCode)
+                .navigation(mActivity, requestCode, this)
     }
 
     /**
@@ -79,7 +88,7 @@ object RouterHelper {
     fun navigationActivityForResult(path: String, mActivity: Activity, bundle: Bundle, requestCode: Int) {
         buildRouter(path)
                 .with(bundle)
-                .navigation(mActivity, requestCode)
+                .navigation(mActivity, requestCode, this)
     }
 
     /**
@@ -90,7 +99,7 @@ object RouterHelper {
         //创建路由
         val router = buildRouterForParams(path, *pair)
         //导航
-        router.navigation(mActivity, requestCode)
+        router.navigation(mActivity, requestCode, this)
     }
 
     /**
@@ -152,5 +161,24 @@ object RouterHelper {
         }
         //返回路由
         return router
+    }
+
+    override fun onLost(postcard: Postcard?) {
+        T.showToast(App.newInstance(), "哎呀,页面失踪了....")
+
+    }
+
+    override fun onFound(postcard: Postcard?) {
+//        postcard.
+//        postcard.
+//        T.showToast(App.newInstance(), "onFound....")
+
+    }
+
+    override fun onInterrupt(postcard: Postcard?) {
+    }
+
+    override fun onArrival(postcard: Postcard?) {
+
     }
 }

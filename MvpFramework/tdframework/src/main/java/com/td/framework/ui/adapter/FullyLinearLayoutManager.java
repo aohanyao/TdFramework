@@ -91,7 +91,6 @@ public class FullyLinearLayoutManager extends LinearLayoutManager {
 
             int childWidthSpec = ScreenUtils.getScreenWidth(mContext);
 
-            //TODO 解决BUG? 什么BUG？
             int childHeightSpec = DensityUtils.dp2px(mContext, 128f);
 
 //                view.measure(childWidthSpec, childHeightSpec);

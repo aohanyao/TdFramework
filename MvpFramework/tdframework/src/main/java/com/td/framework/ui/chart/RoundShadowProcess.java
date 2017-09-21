@@ -19,7 +19,7 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.td.framework.R;
-import com.td.framework.base.BaseAnimatorListener;
+import com.td.framework.base.listener.BaseAnimatorListener;
 import com.td.framework.utils.DensityUtils;
 
 import java.text.DecimalFormat;

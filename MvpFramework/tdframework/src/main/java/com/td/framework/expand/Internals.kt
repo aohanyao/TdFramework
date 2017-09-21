@@ -110,7 +110,7 @@ object AnkoInternals {
     fun internalStartActivity(
             ctx: Context,
             activity: Class<out Activity>,
-            params: Array<out Pair<String, Any>>
+            params: Array<out Pair<String, Any?>>
     ) {
         ctx.startActivity(createIntent(ctx, activity, params))
     }
@@ -135,7 +135,7 @@ object AnkoInternals {
     }
 
     @JvmStatic
-    private fun fillIntentArguments(intent: Intent, params: Array<out Pair<String, Any?>>) {
+     fun fillIntentArguments(intent: Intent, params: Array<out Pair<String, Any?>>) {
         params.forEach {
             val value = it.second
             when (value) {

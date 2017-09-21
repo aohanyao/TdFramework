@@ -34,12 +34,26 @@ public class DateUtils {
      * @return 返回秒数
      */
     public static int countSecondBetweenTwoDates(Date startDate, Date endTime) {
+        if (startDate == null || endTime == null) {
+            return 0;
+        }
         long a = startDate.getTime();
         long b = endTime.getTime();
         int c = (int) ((b - a) / 1000);
         return c;
     }
 
+    public static int countSecondBetweenTwoDay(long startDate, long endTime) {
+        int seconds = countSecondBetweenTwoDates(new Date(startDate), new Date(endTime));
+
+        return Math.abs(seconds / 60 / 60 / 24);
+    }
+
+    public static int countSecondBetweenTwoDay(Date startDate, Date endTime) {
+        int seconds = countSecondBetweenTwoDates(startDate, endTime);
+
+        return Math.abs(seconds / 60 / 60 / 24);
+    }
     /**
      * 获取日期是星期几
      *
@@ -159,15 +173,43 @@ public class DateUtils {
     }
 
     /**
+     * 获得当前时间的未来时间
+     *
+     * @param past
+     * @param startDate
+     * @return
+     */
+    public static Date getFeatureDate(int past, Date startDate) {
+        if (startDate == null) {
+            return null;
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startDate);
+        calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + past);
+        Date today = calendar.getTime();
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//        String result = format.format(today);
+//        Log.e(null, result);
+        return today;
+    }
+
+    /**
      * yyyy-MM-dd
      *
      * @param date
      * @return
      */
     public static String getTimeyyyy_MM_dd(Date date) {
+        if (date == null) {
+            return "";
+        }
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         return format.format(date);
 
+    }
+
+    public static String getTimeyyyy_MM_dd(long date) {
+        return getTimeyyyy_MM_dd(new Date(date));
     }
 
     /**
@@ -211,6 +253,9 @@ public class DateUtils {
      * @return
      */
     public static String getTimeyyyyMMdd(Date date) {
+        if (date == null) {
+            return "";
+        }
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         return format.format(date);
     }
@@ -222,7 +267,7 @@ public class DateUtils {
      * @return
      */
     public static String getTimeDay(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("dd");
+        SimpleDateFormat format = new SimpleDateFormat("d");
         return format.format(date);
     }
 
@@ -282,6 +327,16 @@ public class DateUtils {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public static Date getString2Date(String strTime) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return format.parse(strTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date();
     }
 
     /**

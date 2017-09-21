@@ -14,17 +14,33 @@ import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
 
 /**
- * @author MaTianyu
+ * @author 江俊超
  * @date 2014-08-10
  */
 public class FileUtil {
 
-    public static void fileChannelCopy(File s, File t) {
+
+    /**
+     * 默认APP根目录.
+     */
+    private static String downloadRootDir = null;
+    /**
+     * 默认下载图片文件目录.
+     */
+    private static String imageDownloadDir = null;
+    private static String TAG = "FileUtils";
+
+    /**
+     * 复制文件
+     * @param form
+     * @param to
+     */
+    public static void fileChannelCopy(File form, File to) {
         FileInputStream fi = null;
         FileOutputStream fo = null;
         try {
-            fi = new FileInputStream(s);
-            fo = new FileOutputStream(t);
+            fi = new FileInputStream(form);
+            fo = new FileOutputStream(to);
             FileChannel in = fi.getChannel();//得到对应的文件通道
             FileChannel out = fo.getChannel();//得到对应的文件通道
             in.transferTo(0, in.size(), out);//连接两个通道，并且从in通道读取，然后写入out通道
@@ -61,7 +77,12 @@ public class FileUtil {
         return size;
     }
 
-    public static String formatFileSizeToString(long fileLen) {// 转换文件大小
+    /**
+     * 转换文件大小
+     * @param fileLen
+     * @return
+     */
+    public static String formatFileSizeToString(long fileLen) {//
         DecimalFormat df = new DecimalFormat("#.00");
         String fileSizeString = "";
         if (fileLen < 1024) {
@@ -77,7 +98,7 @@ public class FileUtil {
     }
 
     /***
-     * 根据路径删除图片
+     * 根据路径删除文件
      */
     public static boolean deleteFile(File file) throws IOException {
         return file != null && file.delete();
@@ -100,15 +121,7 @@ public class FileUtil {
     }
 
 
-    /**
-     * 默认APP根目录.
-     */
-    private static String downloadRootDir = null;
-    /**
-     * 默认下载图片文件目录.
-     */
-    private static String imageDownloadDir = null;
-    private static String TAG = "FileUtils";
+
 
     /**
      * Gets the image download dir.

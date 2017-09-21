@@ -16,9 +16,11 @@ import android.view.animation.TranslateAnimation;
 
 import com.td.framework.R;
 import com.td.framework.utils.DensityUtils;
+import com.td.framework.utils.KeyBoardUtils;
 
 /**
  * 自带清除按钮的输入框
+ * <p>焦点获取，显示清除按钮</p>
  */
 public class ClearEditText extends AppCompatEditText implements
         OnFocusChangeListener, TextWatcher {
@@ -34,6 +36,8 @@ public class ClearEditText extends AppCompatEditText implements
      * 控件是否有焦点
      */
     private boolean hasFoucs;
+    /**类型*/
+    private int type=Type.NONE;
 
     public ClearEditText(Context context) {
         this(context, null);
@@ -99,11 +103,11 @@ public class ClearEditText extends AppCompatEditText implements
     public void onFocusChange(View v, boolean hasFocus) {
         this.hasFoucs = hasFocus;
         if (hasFocus) {
-            setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+            setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+            KeyBoardUtils.foucsString(this);
             setClearIconVisible(getText().length() > 0);
         } else {
-            setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-
+            setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
             setClearIconVisible(false);
         }
     }
@@ -115,7 +119,7 @@ public class ClearEditText extends AppCompatEditText implements
      * @param visible
      */
     protected void setClearIconVisible(boolean visible) {
-        Drawable right = visible ? mClearDrawable : mTempDrawable;
+        Drawable right = visible ? mClearDrawable : null;
         setCompoundDrawables(getCompoundDrawables()[0],
                 getCompoundDrawables()[1], right, getCompoundDrawables()[3]);
     }
@@ -130,12 +134,23 @@ public class ClearEditText extends AppCompatEditText implements
         if (hasFoucs) {
             setClearIconVisible(s.length() > 0);
         }
+        if (type==Type.BANK_NUMBER){
+
+        }
     }
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count,
                                   int after) {
 
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     @Override
@@ -167,4 +182,10 @@ public class ClearEditText extends AppCompatEditText implements
     }
 
 
+    public interface Type{
+        /**无*/
+        int NONE=1;
+        /**银行卡号码*/
+        int BANK_NUMBER=1;
+    }
 }

@@ -15,6 +15,7 @@
  */
 
 @file:Suppress("NOTHING_TO_INLINE", "unused")
+
 package com.td.framework.expand
 
 import android.app.Activity
@@ -24,40 +25,55 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.support.v4.app.Fragment
+import com.td.framework.utils.amin.JumpAnimUtils
 import org.jetbrains.anko.support.v4.act
 
-inline fun <reified T: Activity> Context.startActivity(vararg params: Pair<String, Any>) {
+inline fun <reified T : Activity> Context.startActivity(vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartActivity(this, T::class.java, params)
 }
 
+inline fun <reified T : Activity> Activity.startActivity(vararg params: Pair<String, Any>) {
+    AnkoInternals.internalStartActivity(this, T::class.java, params)
+    JumpAnimUtils.jumpTo(this)
+}
 
-inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any>) {
+inline fun Activity.setResultOk(vararg params: Pair<String, Any>) {
+    val intent = Intent()
+    if (params.isNotEmpty()) AnkoInternals.fillIntentArguments(intent, params)
+    setResult(Activity.RESULT_OK, intent)
+}
+
+inline fun <reified T : Activity> Fragment.startActivity(vararg params: Pair<String, Any?>) {
     AnkoInternals.internalStartActivity(activity, T::class.java, params)
+    JumpAnimUtils.jumpTo(activity)
+
 }
 
-inline fun <reified T: Activity> Activity.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
+inline fun <reified T : Activity> Activity.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartActivityForResult(this, T::class.java, requestCode, params)
+    JumpAnimUtils.jumpTo(this)
+
 }
 
-inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
+inline fun <reified T : Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
     startActivityForResult(AnkoInternals.createIntent(act, T::class.java, params), requestCode)
 }
 
-inline fun <reified T: Service> Context.startService(vararg params: Pair<String, Any>) {
+inline fun <reified T : Service> Context.startService(vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartService(this, T::class.java, params)
 }
 
 
-inline fun <reified T: Service> Fragment.startService(vararg params: Pair<String, Any>) {
+inline fun <reified T : Service> Fragment.startService(vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartService(activity, T::class.java, params)
 }
 
-inline fun <reified T: Any> Context.intentFor(vararg params: Pair<String, Any?>): Intent {
+inline fun <reified T : Any> Context.intentFor(vararg params: Pair<String, Any?>): Intent {
     return AnkoInternals.createIntent(this, T::class.java, params)
 }
 
 
-inline fun <reified T: Any> Fragment.intentFor(vararg params: Pair<String, Any?>): Intent {
+inline fun <reified T : Any> Fragment.intentFor(vararg params: Pair<String, Any?>): Intent {
     return AnkoInternals.createIntent(activity, T::class.java, params)
 }
 
@@ -123,6 +139,7 @@ inline fun Intent.noHistory(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_NO
  * @return the same intent with the flag applied.
  */
 inline fun Intent.singleTop(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) }
+
 /**
  * 打开浏览器
  */
@@ -145,6 +162,7 @@ fun Context.browse(url: String, newTask: Boolean = false): Boolean {
         return false
     }
 }
+
 /**
  * 调用系统分享
  */
@@ -196,13 +214,16 @@ fun Context.email(email: String, subject: String = "", text: String = ""): Boole
  */
 inline fun Fragment.makeCall(number: String): Boolean = activity.makeCall(number)
 
+
 /**
  * 拨打电话
  */
-fun Context.makeCall(number: String): Boolean {
+fun Activity.makeCall(number: String): Boolean {
     try {
-        val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$number"))
-        startActivity(intent)
+        requestCallPhonePermissions {
+            val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$number"))
+            startActivity(intent)
+        }
         return true
     } catch (e: Exception) {
         e.printStackTrace()

@@ -24,7 +24,6 @@ import com.td.framework.R;
 
 /**
  * Created by 江俊超 on 2016/12/27 0027.
- * <p>Gihub https://github.com/aohanyao</p>
  */
 
 public class SwitchButtonView extends View {

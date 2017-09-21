@@ -4,24 +4,23 @@ import com.google.gson.JsonParseException;
 import com.td.framework.global.app.App;
 import com.td.framework.mvp.view.BaseView;
 import com.td.framework.utils.L;
-import com.td.framework.utils.NetUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
+import io.reactivex.subscribers.ResourceSubscriber;
 import retrofit2.HttpException;
 
 
 /**
  * <p>1.错误处理转换</p>
  */
-public abstract class ApiSubscriber<T> implements Subscriber<T> {
+public abstract class ApiSubscriber<T> extends ResourceSubscriber<T> {
     private BaseView v;
 
     private ApiSubscriber() {
@@ -99,12 +98,12 @@ public abstract class ApiSubscriber<T> implements Subscriber<T> {
         error.printStackTrace();
     }
 
-    @Override
-    public void onSubscribe(Subscription s) {
-        if (!NetUtils.isConnected(App.newInstance())) {
-            onError(new NetError(new RuntimeException(""), NetError.UNOKE));
-        }
-    }
+//    @Override
+//    public void onSubscribe(Subscription s) {
+//        if (!NetUtils.isConnected(App.newInstance())) {
+//            onError(new NetError(new RuntimeException(""), NetError.UNOKE));
+//        }
+//    }
 
     @Override
     public void onComplete() {

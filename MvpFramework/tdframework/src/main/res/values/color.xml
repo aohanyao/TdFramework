@@ -36,8 +36,8 @@
     <color name="selected_day_text">#fff2f2f2</color>
     <color name="default_color_expanded">#F0F0F0</color>
     <color name="color_alert">#03a9f4</color>
-    <color name="background">#f2f2f2</color>
-    <color name="line_color">#e5e5e5</color>
+    <!--<color name="background">#f2f2f2</color>-->
+    <color name="background">#ededf2</color>
     <color name="possible_result_points">#c0ffbd21</color> <!-- Android standard ICS color -->
     <color name="result_points">#c099cc00</color> <!-- Android standard ICS color -->
     <color name="result_view">#b0000000</color>
@@ -47,4 +47,11 @@
     <color name="google_red">#d62d20</color>
     <color name="trans_t">#00000000</color>
     <color name="partTranslucent">#39000000</color>
+    <!--拆分出来的文字颜色-->
+    <color name="text_color_333">#333</color>
+    <color name="text_color_666">#666</color>
+    <color name="text_color_999">#999</color>
+    <color name="text_color_b3b3b3">#ffb3b3b3</color>
+    <color name="line_color_e6e6e6">#e6e6e6</color>
+    <!--拆分出来的文字颜色-->
 </resources>

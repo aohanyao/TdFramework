@@ -3,6 +3,7 @@ package com.td.framework.expand
 import android.app.Activity
 import android.support.v4.app.Fragment
 import com.td.framework.global.router.RouterHelper
+import com.td.framework.utils.amin.JumpAnimUtils
 
 /**
  * Created by 江俊超 on 2017/7/4 0004.
@@ -18,10 +19,18 @@ import com.td.framework.global.router.RouterHelper
 fun Activity.navigationActivityFromPair(path: String, vararg pair: Pair<String, Any>) {
     RouterHelper.navigationActivityFromPair(path, Activity@ this, *pair)
 }
+
 fun Fragment.navigationActivityFromPair(path: String, vararg pair: Pair<String, Any>) {
-    RouterHelper.navigationActivityFromPair(path,activity, *pair)
+    RouterHelper.navigationActivityFromPair(path, activity, *pair)
 }
 
+fun Fragment.navigationActivityForResult(path: String, requestCode: Int) {
+    RouterHelper.navigationActivityForResult(path, activity, requestCode)
+}
+
+fun Fragment.navigationActivityFromPairForResult(path: String, requestCode: Int, vararg pair: Pair<String, Any>) {
+    RouterHelper.navigationActivityFromPairForResult(path, activity, requestCode, *pair)
+}
 
 /**
  * 通过路由路径打开一个Activity
@@ -29,6 +38,7 @@ fun Fragment.navigationActivityFromPair(path: String, vararg pair: Pair<String, 
  */
 fun Activity.navigationActivity(path: String) {
     RouterHelper.navigationActivity(path, Activity@ this)
+    JumpAnimUtils.jumpTo(this)
 }
 
 /**

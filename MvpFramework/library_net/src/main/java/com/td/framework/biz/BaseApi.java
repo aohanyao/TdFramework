@@ -6,6 +6,10 @@ import com.td.framework.NetConfig;
 
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Flowable;
+import io.reactivex.FlowableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.CookieJar;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -196,21 +200,19 @@ public class BaseApi {
         return provider;
     }
 
-//    /**
-//     * 线程切换
-//     *
-//     * @return Transformer
-//     */
-//    public static <T> Observable<T> getScheduler() {
-//
-//
-//        return new Observable.Transformer<T, T>() {
-//            @Override
-//            public Observable<T> call(Observable<T> observable) {
-//                return observable.subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread());
-//            }
-//        };
-//    }
+    /**
+     * 统一线程处理
+     * @param <T>
+     * @return
+     */
+    public static <T> FlowableTransformer<T, T> getScheduler() {    //compose简化线程
+        return new FlowableTransformer<T, T>() {
+            @Override
+            public Flowable<T> apply(Flowable<T> observable) {
+                return observable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+            }
+        };
+    }
 
 }

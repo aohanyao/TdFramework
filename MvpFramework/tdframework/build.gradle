@@ -49,6 +49,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile project(':library_net')
 
+    compile rootProject.ext.dependencies["rxkotlin"]
     compile rootProject.ext.dependencies["rxlifecycle2"]
     compile rootProject.ext.dependencies["rxlifecycle-android2"]
     compile rootProject.ext.dependencies["rxlifecycle-components2"]

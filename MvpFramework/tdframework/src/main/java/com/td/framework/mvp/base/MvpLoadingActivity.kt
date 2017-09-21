@@ -186,7 +186,7 @@ abstract class MvpLoadingActivity<out P> : TDBaseLoadingActivity(), DialogInterf
     protected fun onDialogCancel() {
         //弹窗消失 应该取消请求
         try {
-            (p as BasePresenter<*>).subscribe()
+            (p as? BasePresenter<*>?)?.subscribe()
         } catch (ignored: Exception) {
         }
 

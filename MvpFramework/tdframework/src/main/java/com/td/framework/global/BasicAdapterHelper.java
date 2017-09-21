@@ -11,12 +11,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.td.framework.R;
-import com.td.framework.moudle.suspension.IndexBar.bean.BaseIndexPinyinBean;
-import com.td.framework.moudle.suspension.IndexBar.widget.IndexBar;
-import com.td.framework.moudle.suspension.suspension.SuspensionDecoration;
-import com.td.framework.utils.L;
-
-import java.util.List;
 
 /**
  * <p>作者：江俊超 on 2016/9/6 17:07</p>
@@ -61,49 +55,6 @@ public class BasicAdapterHelper {
         }
         mAdapter.setEmptyView(emptyView);
         mAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
-
-    }
-
-    /**
-     * 初始化通讯录
-     *
-     * @param mContext
-     * @param mAdapter
-     * @param mRecyclerView
-     * @param mDatas
-     * @param indexBar
-     * @param tvSideBarHint
-     */
-    public static void initContractAdapter(Context mContext,
-                                           BaseQuickAdapter mAdapter,
-                                           RecyclerView mRecyclerView,
-                                           List<BaseIndexPinyinBean> mDatas,
-                                           IndexBar indexBar,
-                                           TextView tvSideBarHint) {
-
-        if (mRecyclerView == null || mAdapter == null || tvSideBarHint == null) {
-            L.e("some params is null");
-            return;
-        }
-        LinearLayoutManager mManager = new LinearLayoutManager(mContext);
-        SuspensionDecoration mDecoration = new SuspensionDecoration(mContext, mDatas)
-                .setTitleHeight(25);
-
-        mRecyclerView.setLayoutManager(mManager);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addItemDecoration(mDecoration);
-        mAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
-        View emptyView = LayoutInflater.from(mContext).inflate(R.layout.empty_view, (ViewGroup) mRecyclerView.getParent(), false);
-        mAdapter.setEmptyView(emptyView);
-        //使用indexBar
-        mAdapter.setNewData(mDatas);
-        mAdapter.notifyDataSetChanged();
-        indexBar.setmPressedShowTextView(tvSideBarHint)//设置HintTextView
-//                .setNeedRealIndex(true)//设置需要真实的索引
-                .setmLayoutManager(mManager)//设置RecyclerView的LayoutManager
-                .setmSourceDatas(mDatas)//设置数据
-                .invalidate();
-        mDecoration.setmDatas(mDatas);
 
     }
 }

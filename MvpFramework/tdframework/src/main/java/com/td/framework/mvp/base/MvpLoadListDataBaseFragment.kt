@@ -51,7 +51,7 @@ abstract class MvpLoadListDataBaseFragment<P : GeneralLoadDataContract.GeneralLo
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
         if (!isCreate) {
-            p.refreshData(mParam)
+            p?.refreshData(mParam)
         }
     }
 
@@ -82,12 +82,12 @@ abstract class MvpLoadListDataBaseFragment<P : GeneralLoadDataContract.GeneralLo
         super.setUserVisibleHint(isVisibleToUser)
         if (isVisibleToUser && isCreate) {
             isCreate = false
-            p.refreshData(mParam)
+            p?.refreshData(mParam)
         }
     }
 
     override fun onRetry() {
-        p.refreshData(mParam)
+        p?.refreshData(mParam)
     }
 
 
@@ -118,7 +118,7 @@ abstract class MvpLoadListDataBaseFragment<P : GeneralLoadDataContract.GeneralLo
     }
 
     protected open fun refresh() {
-        p.refreshData(mParam)
+        p?.refreshData(mParam)
     }
 
     override fun noMore() {
@@ -126,7 +126,7 @@ abstract class MvpLoadListDataBaseFragment<P : GeneralLoadDataContract.GeneralLo
     }
 
     override fun onLoadMoreRequested() {
-        p.loadMoreData(mParam)
+        p?.loadMoreData(mParam)
     }
 
     /**
@@ -175,6 +175,6 @@ abstract class MvpLoadListDataBaseFragment<P : GeneralLoadDataContract.GeneralLo
     }
 
     override fun onRefresh() {
-        p.refreshData(mParam)
+        p?.refreshData(mParam)
     }
 }

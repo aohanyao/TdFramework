@@ -292,7 +292,6 @@ public class FlowTagLayout extends ViewGroup {
     /**
      * 清除所有被选择的选项
      *
-     * @author https://github.com/wanyt
      *
      * @time 2016年11月13日16:07:23
      *

@@ -6,5 +6,4 @@ package com.td.framework.mvp.model
  * <b>说明<b><br/>
  * <li></li>
  */
-class EmptyParamsInfo :BaseParamsInfo{
-}
+class EmptyParamsInfo :BaseParamsInfo

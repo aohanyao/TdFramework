@@ -82,7 +82,7 @@ ext {
             "Android-PickerView"         : "com.contrarywind:Android-PickerView:3.2.5",
             "anko-commons"                : "org.jetbrains.anko:anko-commons:${android["anko_version"]}",
             "anko-sqlite"                : "org.jetbrains.anko:anko-sqlite:${android["anko_version"]}",
-            "rxkotlin"                   : "io.reactivex:rxkotlin:1.0.0"
+            "rxkotlin"                   : "io.reactivex.rxjava2:rxkotlin:2.0.0"
     ]
 
 

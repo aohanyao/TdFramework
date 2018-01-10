@@ -1,0 +1,72 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    defaultConfig {
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+//    buildTypes {
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+//    }
+
+
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation rootProject.ext.dependencies["design"]
+    implementation rootProject.ext.dependencies["gson"]
+
+
+    implementation rootProject.ext.dependencies["eventbus"]
+    implementation rootProject.ext.dependencies["glide"]
+    implementation rootProject.ext.dependencies["multidex"]
+    implementation rootProject.ext.dependencies["Luban"]
+    implementation rootProject.ext.dependencies["circleindicator"]
+
+    compile rootProject.ext.dependencies["arouter-api"]
+
+    implementation 'com.umeng.analytics:analytics:latest.integration'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    //*********************网络相关 RX
+    implementation rootProject.ext.dependencies["rxkotlin2"]
+    implementation rootProject.ext.dependencies["rxpermissions2"]
+
+    implementation rootProject.ext.dependencies["rxjava2"]
+    implementation rootProject.ext.dependencies["retrofit2"]
+    implementation rootProject.ext.dependencies["retrofit-adapter-rxjava2"]
+    implementation rootProject.ext.dependencies["retrofit-converter-gson2"]
+    implementation rootProject.ext.dependencies["okhttp3-logging-interceptor"]
+    implementation rootProject.ext.dependencies["rxandroid2"]
+    implementation (rootProject.ext.dependencies["rxlifecycle2"]){
+        exclude group: 'com.android.support'
+    }
+    implementation (rootProject.ext.dependencies["rxlifecycle-components2"]){
+        exclude group: 'com.android.support'
+    }
+    implementation (rootProject.ext.dependencies["rxlifecycle-android2"]){
+        exclude group: 'com.android.support'
+    }
+    //*********************网络相关 RX
+
+    //*********************UI组件
+    compile project(':library_ui')
+
+    //*********************UI组件
+}

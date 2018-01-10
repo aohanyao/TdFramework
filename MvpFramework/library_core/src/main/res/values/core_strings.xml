@@ -1,0 +1,30 @@
+<resources>
+    <string name="camera_problem">抱歉，您相机出现问题。您可能需要重启设备。</string>
+    <string name="framwork_problem">二维码识别暂时出现问题。您重启再试。</string>
+    <string name="msg_share_subject_line">这是我所扫描条码的内容</string>
+    <string name="msg_default_mms_subject">Hi</string>
+    <string name="msg_intent_failed">抱歉，无法打开所需软件。 条码内容可能无效。</string>
+    <string name="button_ok">确定</string>
+    <string name="result_uri">网址路径</string>
+
+    <string name="button_1">浏览器打开</string>
+    <string name="button_2">内容</string>
+    <string name="button_3">其它标题</string>
+    <string name="camera_permission_confirmation">This app demonstrates the usage of CameraView. In order to do that, it needs permission to access camera.</string>
+    <string name="camera_permission_not_granted">Camera app cannot do anything without camera permission.</string>
+    <string name="picture_taken">Picture taken</string>
+    <string name="switch_flash">Switch flash</string>
+    <string name="switch_camera">Switch camera</string>
+    <string name="flash_auto">Flash auto</string>
+    <string name="flash_off">Flash off</string>
+    <string name="flash_on">Flash on</string>
+    <string name="sans_serif" translatable="false">sans-serif</string>
+    <string name="call_phone_permissions_is_refues">权限被被拒绝，无法直接拨打号码</string>
+    <string name="send_sms_permissions_is_refues">权限被被拒绝，无法直接拨发送短信</string>
+
+    <string name="hello_blank_fragment">没有找到相关数据</string>
+    <string name="title_activity_login">登陆</string>
+
+    <string name="call_back">返回</string>
+    <string name="commit_data_loding">正在提交数据</string>
+</resources>

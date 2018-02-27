@@ -67,15 +67,7 @@ dependencies {
     //
     //--------------生命周期绑定
 
-    //--------------组件化
-    if (!IsBuildMudle.toBoolean()) {
-        compile project(':module_wallet')
-    }
-    //--------------组件化
 
-    //--------------路由地址
-    implementation project(':library_router')
-    //--------------路由地址
     kapt rootProject.ext.dependencies["arouter-compiler"]
 
 }

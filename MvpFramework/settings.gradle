@@ -1,1 +1,1 @@
-include ':app', ':tdframework', 'library_net'
+include ':app', ':library_core',':library_ui'

@@ -45,6 +45,17 @@ fun Activity.requestMapPermissions(block: () -> Unit) {
 }
 
 /**
+ * 请求存储相关的权限
+ * <p>照片</p>
+ */
+fun Activity.requestStoragePermissions(block: () -> Unit) {
+    requestRxPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE) {
+        block.invoke()
+    }
+}
+
+/**
  * 请求拨打电话的权限
  */
 fun Activity.requestCallPhonePermissions(block: () -> Unit) {
@@ -90,6 +101,18 @@ fun Fragment.requestCallPhonePermissions(block: () -> Unit) {
         block.invoke()
     }
 }
+
+/**
+ * 请求存储相关的权限
+ * <p>照片</p>
+ */
+fun Fragment.requestStoragePermissions(block: () -> Unit) {
+    requestRxPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE) {
+        block.invoke()
+    }
+}
+
 //************************************************************************Fragment end
 
 

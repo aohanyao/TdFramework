@@ -37,7 +37,7 @@ interface RequestDataContract {
         /**
          * 提交数据失败
          */
-        fun commitDataFail(msg:String?) {
+        fun commitDataFail(msg: String?) {
         }
     }
 
@@ -69,7 +69,7 @@ interface RequestDataContract {
 
         }
 
-        fun commitData( commitParam: BaseParamsInfo) {
+        fun commitData(commitParam: BaseParamsInfo) {
             getCommitDataObservable(commitParam)?.apply {
                 //取消前一次请求
                 unSubscribe()
@@ -89,19 +89,19 @@ interface RequestDataContract {
 
          * @param responseData
          */
-        protected fun completeRequest(responseData: RT) {
+        protected open fun completeRequest(responseData: RT) {
         }
 
         /**
          * 获取请求数据
          */
-        protected abstract fun getRequestDataObservable(params: RP): Flowable<RT>
+        protected abstract fun getRequestDataObservable(params: RP): Flowable<RT>?
 
         /**
          * 提交数据
          */
 //        @Deprecated("未完善，请勿使用", ReplaceWith("null"))
-        protected open fun getCommitDataObservable(params:BaseParamsInfo): Flowable<CodeMsgModel>? {
+        protected open fun getCommitDataObservable(params: BaseParamsInfo): Flowable<CodeMsgModel>? {
             return null
         }
 

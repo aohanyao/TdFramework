@@ -8,6 +8,7 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.MalformedJsonException;
 import com.td.framework.biz.NetError;
+import com.td.framework.utils.L;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,9 +42,25 @@ public class CustomResponseConverter<T> implements Converter<ResponseBody, T> {
             //TODO  一定要适配    有分页 和无分页的情况
 
             String body = value.string();
-
-
+            L.e(body);
+            System.out.print(body);
             JSONObject jsonObject = new JSONObject(body);
+            //------------------------------------------测试
+            if (body.contains("issuccess")) {
+                //返回测试数据
+                String dataString = "{}";
+                try {
+                    dataString = jsonObject.getJSONObject("data").toString();
+                } catch (JSONException ignored) {
+                    //JSONObject["data"] is not a JSONObject.
+                }
+
+                return adapter.fromJson(dataString);
+            }
+
+
+            //------------------------------------------测试
+
 
             int code = 0;
             try {

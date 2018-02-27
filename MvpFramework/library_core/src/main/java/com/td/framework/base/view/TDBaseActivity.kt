@@ -28,7 +28,10 @@ import com.td.framework.utils.T
 import com.td.framework.utils.amin.JumpAnimUtils
 import com.td.framework.utils.statusbar.StatusBarUtil
 import com.umeng.analytics.MobclickAgent
+import io.reactivex.FlowableTransformer
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
 
 
@@ -57,7 +60,7 @@ open class TDBaseActivity : SwipeBackActivity() {
         isCreate = true
         mAppManager.addOnStartActivity(this)
         if (useEventBus()) EventBus.getDefault().register(this)
-        if (usSwipeBack()) initSwipActivity()
+        if (usSwipeBack()) initSwipeActivity()
     }
 
     override fun onResume() {
@@ -79,13 +82,16 @@ open class TDBaseActivity : SwipeBackActivity() {
         System.gc()
     }
 
-    protected fun usSwipeBack(): Boolean {
+    protected open fun usSwipeBack(): Boolean {
         return true
     }
 
-    protected fun initSwipActivity() {
+    /***
+     * 初始化话滑动返回
+     */
+    private fun initSwipeActivity() {
         mSwipeBackLayout = swipeBackLayout
-        mSwipeBackLayout!!.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
+        mSwipeBackLayout?.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT)
     }
 
     override fun getResources(): Resources {
@@ -93,6 +99,8 @@ open class TDBaseActivity : SwipeBackActivity() {
         val config = Configuration()
         config.fontScale = 1.0f
         //设置字体的大小不会变化， 不会随着 系统字体的更改而变化
+        //2018-2-27 附加解释：在App中固定字体的大小，防止当手机设置大字体，老人模式
+        //的时候 字体变大，样式更改
         res.updateConfiguration(config, res.displayMetrics)
         return res
     }
@@ -151,7 +159,13 @@ open class TDBaseActivity : SwipeBackActivity() {
         mToolbar?.title = ""
         mToolbar?.setNavigationIcon(R.drawable.ic_chevron_left_write_24dp)
         mToolbar?.contentInsetStartWithNavigation = 10
-        val color = resources.getColor(colorId[0])
+        //默认为颜色
+        var color: Int = colorId[0]
+        try {
+            //颜色资源ID
+            color = resources.getColor(colorId[0])
+        } catch (e: Exception) {
+        }
         StatusBarUtil.setColor(mActivity, color, 1)
         mToolbar?.setBackgroundColor(color)
 
@@ -172,43 +186,87 @@ open class TDBaseActivity : SwipeBackActivity() {
         navText?.setOnClickListener { onNavigationClick() }
     }
 
+
     /**
-     * 标题栏
-     * 设计成可变参数的原因是为了适配5.0以下，标题栏和状态栏不一致颜色的情况下也可以直接使用
+     *
+     * 获取标题栏的高度设置，如果说哪个页面不一样，可以在子页面选择<p>
+     * 重写这个方法，返回自己需要的值
      */
-    protected fun initChangerToolbarGradientColor(vararg colorId: Int) {
+    protected fun getAppBarLayoutHeight(): Float {
+        return 44f
+    }
+
+    /**
+     * @param colorPrimaryId  必须不能为空
+     * @param drawableColorPrimary
+     * @param useDefaultGradient  是否使用默认渐变颜色
+     */
+    private fun initGradientToolbar(colorPrimaryId: Int,
+                                    drawableColorPrimary: Int?,
+                                    useDefaultGradient: Boolean = false) {
         mToolbar?.title = ""
         mToolbar?.setNavigationIcon(R.drawable.ic_chevron_left_write_24dp)
         mToolbar?.contentInsetStartWithNavigation = 10
         mToolbar?.setBackgroundColor(0x00000000)
         mToolbar?.background?.alpha = 0
-        if (colorId.isNotEmpty()) {
-            //19以上，直接使用渐变背景
-            //大于 19     故意设置的 UI要的渐进变化的状态栏和 标题栏
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                val appBarLayout = findViewById(R.id.app_bar_layout) as? AppBarLayout?
 
-                if (appBarLayout != null) {
-                    val params = appBarLayout.layoutParams as ViewGroup.MarginLayoutParams
-                    val statusBarHeight = StatusBarUtil.getStatusBarHeight(mActivity)
-                    params.height = DensityUtils.dp2px(mActivity, 44f) + statusBarHeight
-                    appBarLayout.layoutParams = params
-                    appBarLayout.setPadding(0, statusBarHeight, 0, 0)
-                    appBarLayout.setBackgroundResource(R.drawable.color_primary)
+        //大于 19    设置沉浸
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //获取状态栏
+            val appBarLayout = findViewById(R.id.app_bar_layout) as? AppBarLayout?
+
+            if (appBarLayout != null) {
+                val params = appBarLayout.layoutParams as ViewGroup.MarginLayoutParams
+                val statusBarHeight = StatusBarUtil.getStatusBarHeight(mActivity)
+                //设置标题栏的高度
+                params.height = DensityUtils.dp2px(mActivity, getAppBarLayoutHeight()) + statusBarHeight
+                appBarLayout.layoutParams = params
+                appBarLayout.setPadding(0, statusBarHeight, 0, 0)
+                if (drawableColorPrimary == null) {
+                    if (useDefaultGradient) {//默认颜色
+                        appBarLayout.setBackgroundResource(R.drawable.color_primary)
+                    } else {
+                        try {
+                            //颜色资源ID
+                            appBarLayout.setBackgroundResource(colorPrimaryId)
+                        } catch (e: Exception) {
+                            //纯颜色
+                            appBarLayout.setBackgroundColor(colorPrimaryId)
+                        }
+                    }
+                } else {
+                    appBarLayout.setBackgroundResource(drawableColorPrimary)
                 }
-                StatusBarUtil.setTransparentForImageViewInFragment(this, null)
-            } else {
-                //                mToolbar.setBackgroundResource(R.drawable.color_primary);
-                val color = resources.getColor(colorId[0])
-                StatusBarUtil.setColor(mActivity, color, 1)
-                mToolbar?.setBackgroundColor(color)
             }
-
+            StatusBarUtil.setTransparentForImageViewInFragment(this, null)
+        } else {
+            val color = resources.getColor(colorPrimaryId)
+            StatusBarUtil.setColor(mActivity, color, 1)
+            mToolbar?.setBackgroundColor(color)
         }
+
         /**
          * 初始化导航点击事件
          */
         initNavigationEvent()
+    }
+
+    /**
+     * 标题栏
+     * 设计成可变参数的原因是为了适配5.0以下，标题栏和状态栏不一致颜色的情况下也可以直接使用
+     * @param colorPrimaryId 颜色ID
+     * @param drawableColorPrimary 渐变的颜色
+     */
+    protected fun initToolbar(colorPrimaryId: Int, drawableColorPrimary: Int?) {
+        initGradientToolbar(colorPrimaryId, drawableColorPrimary, true)
+    }
+
+    /**
+     * 不适用渐变颜色，直接以colorPrimaryId作为全部颜色
+     * @param colorPrimaryId 颜色
+     */
+    protected fun initToolbar(colorPrimaryId: Int) {
+        initGradientToolbar(colorPrimaryId, null, false)
     }
 
     /**
@@ -220,8 +278,11 @@ open class TDBaseActivity : SwipeBackActivity() {
      * *
      * @param colorId 颜色
      */
-    protected fun initChangerToolbarGradientColor(navText: String?, title: String?, vararg colorId: Int) {
-        initChangerToolbarGradientColor(*colorId)
+    protected fun initToolbar(navText: String? = "",
+                              title: String? = "",
+                              colorId: Int,
+                              drawableColorPrimary: Int?) {
+        initToolbar(colorPrimaryId = colorId, drawableColorPrimary = drawableColorPrimary)
 
         //导航文字
         val tvNav = findViewById(R.id.toolbar_nav_text) as? TextView?
@@ -239,19 +300,31 @@ open class TDBaseActivity : SwipeBackActivity() {
     }
 
     /**
+     * 设置标题
+     */
+    protected open fun setToolBarTitle(title: Int) {
+        val tvTitle = findViewById(R.id.tv_toolbar_title) as? TextView?
+        tvTitle?.let {
+            tvTitle.setText(title)
+        }
+    }
+
+    /**
      * 重装的toolbar 工具
 
      * @param title   标题
      * *
      * @param colorId 颜色
      */
-    protected fun initChangerToolbarGradientColor(title: String, vararg colorId: Int) {
-        initChangerToolbarGradientColor(*colorId)
+    protected fun initToolbar(title: String = "",
+                              colorId: Int,
+                              drawableColorPrimary: Int?) {
+        initToolbar(colorPrimaryId = colorId, drawableColorPrimary = drawableColorPrimary)
 
         //标题栏中间的文字
         val tvTitle = findViewById(R.id.tv_toolbar_title) as? TextView?
         tvTitle?.let {
-            tvTitle.text = title ?: ""
+            tvTitle.text = title
         }
     }
 
@@ -303,4 +376,30 @@ open class TDBaseActivity : SwipeBackActivity() {
 
     }
 
+
+    /**
+     *  *  1. 线程切换
+     *  *  2. Rx生命周期绑定
+     * @return
+     */
+    protected fun <T> getCompose(): FlowableTransformer<T, T> {
+        return FlowableTransformer { observable ->
+            observable.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .compose<T>(bindToLifecycle())
+        }
+
+    }
+
+    /**
+     * 重启activity
+     */
+    protected fun reloadActivity() {
+        val intent = intent
+        overridePendingTransition(0, 0)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        finish()
+        overridePendingTransition(0, 0)
+        startActivity(intent)
+    }
 }

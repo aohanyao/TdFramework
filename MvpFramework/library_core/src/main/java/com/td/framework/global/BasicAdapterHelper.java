@@ -43,7 +43,7 @@ public class BasicAdapterHelper {
         initAdapter(mContext, mAdapter, mRecyclerView, LinearLayoutManager.HORIZONTAL, "");
     }
 
-    private static void initAdapter(Context mContext, BaseQuickAdapter mAdapter, RecyclerView mRecyclerView, int orientation, String emptyTip) {
+    public static void initAdapter(Context mContext, BaseQuickAdapter mAdapter, RecyclerView mRecyclerView, int orientation, String emptyTip) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(orientation);
         mRecyclerView.setLayoutManager(layoutManager);

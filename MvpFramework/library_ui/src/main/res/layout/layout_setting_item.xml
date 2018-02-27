@@ -23,7 +23,7 @@
         android:clickable="false"
         android:focusable="false"
         android:src="@drawable/ic_chevron_left_black_24dp"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_line_text"
@@ -31,7 +31,6 @@
         android:layout_alignLeft="@id/iv_left_icon"
         android:clickable="false"
         android:focusable="false"
-        android:paddingLeft="16dp"
         android:text="关于" />
 
 

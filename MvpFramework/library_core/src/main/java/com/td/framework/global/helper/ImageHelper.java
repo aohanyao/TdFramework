@@ -8,13 +8,13 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.td.framework.R;
 import com.td.framework.utils.L;
 
 import java.io.File;
-import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -23,6 +23,14 @@ import java.util.concurrent.ExecutionException;
  * <p>图片加载帮助类</p>
  */
 public class ImageHelper {
+
+    private static RequestOptions options = new RequestOptions()
+            .centerCrop()
+            .placeholder(R.drawable.image_loading)
+            .error(R.drawable.image_loading)
+            .priority(Priority.HIGH);
+    ;
+
     /**
      * Glide 加载图片
      *
@@ -30,33 +38,11 @@ public class ImageHelper {
      * @param imageView
      */
     public static void loadImageFromGlide(Context mContext, String url, ImageView imageView) {
+
 //        L.e(url);
         Glide.with(mContext).load(url)
-                .error(R.drawable.image_loading)
-                .placeholder(R.drawable.image_loading)
+                .apply(options)
                 .into(imageView);
-    }
-
-    public static Bitmap loadImageFromGlide(Context mContext, String url) {
-        L.e(url);
-        Bitmap myBitmap = null;
-        try {
-            myBitmap = Glide.with(mContext)
-                    .load(url)
-                    .asBitmap() //must
-                    .error(R.drawable.image_loading)
-                    .placeholder(R.drawable.image_loading)
-                    .centerCrop()
-                    .into(150, 150)
-                    .get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        return myBitmap;
-
     }
 
 
@@ -70,18 +56,14 @@ public class ImageHelper {
     public static void loadImageFromUri(Context mContext, String uri, ImageView imageView) {
         L.e(uri);
         Glide.with(mContext).load(Uri.parse(uri))
-                .error(R.drawable.image_loading)
-                .placeholder(R.drawable.image_loading)
+                .apply(options)
                 .into(imageView);
     }
 
     public static void loadImageFromUriNoCache(Context mContext, String uri, ImageView imageView) {
 //        L.e(uri);
         Glide.with(mContext).load(Uri.parse(uri))
-                .error(R.drawable.image_loading)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .placeholder(R.drawable.image_loading)
+                .apply(options)
                 .into(imageView);
     }
 
@@ -91,18 +73,14 @@ public class ImageHelper {
             loadImageFromUriNoCache(mContext, uri, imageView);
         } else {
             Glide.with(mContext).load(uri)
-                    .error(R.drawable.image_loading)
-//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                    .skipMemoryCache(true)
-                    .placeholder(R.drawable.image_loading)
+                    .apply(options)
                     .into(imageView);
         }
     }
 
-    public static void loadImageFromFile(Context mContext, File file, ImageView imageView) {
+    public static void loadImageFromGlide(Context mContext, File file, ImageView imageView) {
         Glide.with(mContext).load(file)
-                .error(R.drawable.image_loading)
-                .placeholder(R.drawable.image_loading)
+                .apply(options)
                 .into(imageView);
     }
 
@@ -114,12 +92,12 @@ public class ImageHelper {
      * @param imageView
      */
     public static void loadShopRoundImage(final Context mContext, String url, final ImageView imageView) {
+
+
         Glide.with(mContext)
-                .load(url)
                 .asBitmap()
-                .error(R.mipmap.default_header)
-                .placeholder(R.mipmap.default_header)
-                .centerCrop()
+                .load(url)
+                .apply(options)
                 .into(new BitmapImageViewTarget(imageView) {
                     @Override
                     protected void setResource(Bitmap resource) {
@@ -130,13 +108,12 @@ public class ImageHelper {
                     }
                 });
     }
+
     public static void loadShopRoundImage(final Context mContext, int resid, final ImageView imageView) {
         Glide.with(mContext)
-                .load(resid)
                 .asBitmap()
-                .error(R.mipmap.default_header)
-                .placeholder(R.mipmap.default_header)
-                .centerCrop()
+                .load(resid)
+                .apply(options)
                 .into(new BitmapImageViewTarget(imageView) {
                     @Override
                     protected void setResource(Bitmap resource) {
@@ -147,6 +124,7 @@ public class ImageHelper {
                     }
                 });
     }
+
     /**
      * 加载圆形的图像
      *
@@ -155,9 +133,9 @@ public class ImageHelper {
      */
     public static void loadShopRoundImage(final Context mContext, File file, final ImageView imageView) {
         Glide.with(mContext)
-                .load(file)
                 .asBitmap()
-                .centerCrop()
+                .load(file)
+                .apply(options)
                 .into(new BitmapImageViewTarget(imageView) {
                     @Override
                     protected void setResource(Bitmap resource) {

@@ -33,7 +33,6 @@ import java.util.Map;
 
 /**
  * Created by jc on 2017/2/10 0010.
- * <p>Gihub https://github.com/aohanyao</p>
  */
 
 public class X5WebView extends WebView {

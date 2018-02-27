@@ -32,11 +32,14 @@ public class VStatusBar extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        //设置当前view的高度为状态栏的高度
         WindowManager systemService = (WindowManager) (getContext().getSystemService(Context.WINDOW_SERVICE));
         setMeasuredDimension(systemService.getDefaultDisplay().getWidth(),
                 StatusBarUtil.getStatusBarHeight(getContext()));
 
+        //4.4以下不支持状态栏沉浸的不显示，
+        // TODO 另外，这里没有适配华为
         setVisibility(Build.VERSION.SDK_INT > 19 ? VISIBLE : GONE);
     }
 }

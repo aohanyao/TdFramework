@@ -24,20 +24,29 @@ android {
 //    }
 
 
-
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation rootProject.ext.dependencies["design"]
-    implementation rootProject.ext.dependencies["gson"]
+    compile rootProject.ext.dependencies["gson"]
 
 
-    implementation rootProject.ext.dependencies["eventbus"]
-    implementation rootProject.ext.dependencies["glide"]
-    implementation rootProject.ext.dependencies["multidex"]
+    compile rootProject.ext.dependencies["eventbus"]
+    implementation (rootProject.ext.dependencies["glide"]){
+        exclude group: 'com.android.support'
+    }
+
+    compile rootProject.ext.dependencies["multidex"]
     implementation rootProject.ext.dependencies["Luban"]
     implementation rootProject.ext.dependencies["circleindicator"]
+    compile(rootProject.ext.dependencies["convenientbanner"]) {
+        exclude group: 'com.android.support'
+    }
+    /**富文本*/
+    compile rootProject.ext.dependencies["richtext"]
+    /*滑动隐藏*/
+    compile rootProject.ext.dependencies["ByeBurger"]
 
     compile rootProject.ext.dependencies["arouter-api"]
 
@@ -45,22 +54,24 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     //*********************网络相关 RX
-    implementation rootProject.ext.dependencies["rxkotlin2"]
-    implementation rootProject.ext.dependencies["rxpermissions2"]
+    compile rootProject.ext.dependencies["rxkotlin2"]
+    compile rootProject.ext.dependencies["rxpermissions2"]
 
-    implementation rootProject.ext.dependencies["rxjava2"]
-    implementation rootProject.ext.dependencies["retrofit2"]
-    implementation rootProject.ext.dependencies["retrofit-adapter-rxjava2"]
-    implementation rootProject.ext.dependencies["retrofit-converter-gson2"]
-    implementation rootProject.ext.dependencies["okhttp3-logging-interceptor"]
-    implementation rootProject.ext.dependencies["rxandroid2"]
-    implementation (rootProject.ext.dependencies["rxlifecycle2"]){
+    compile rootProject.ext.dependencies["rxjava2"]
+    compile rootProject.ext.dependencies["retrofit2"]
+    compile rootProject.ext.dependencies["retrofit-adapter-rxjava2"]
+    compile rootProject.ext.dependencies["retrofit-converter-gson2"]
+    compile rootProject.ext.dependencies["okhttp3-logging-interceptor"]
+    compile rootProject.ext.dependencies["rxandroid2"]
+    compile rootProject.ext.dependencies["okhttp3"]
+
+    implementation(rootProject.ext.dependencies["rxlifecycle2"]) {
         exclude group: 'com.android.support'
     }
-    implementation (rootProject.ext.dependencies["rxlifecycle-components2"]){
+    implementation(rootProject.ext.dependencies["rxlifecycle-components2"]) {
         exclude group: 'com.android.support'
     }
-    implementation (rootProject.ext.dependencies["rxlifecycle-android2"]){
+    implementation(rootProject.ext.dependencies["rxlifecycle-android2"]) {
         exclude group: 'com.android.support'
     }
     //*********************网络相关 RX
@@ -69,4 +80,14 @@ dependencies {
     compile project(':library_ui')
 
     //*********************UI组件
-}
+
+    //*********************阴影
+    compile 'com.github.dmytrodanylyk.shadow-layout:library:1.0.3'
+    //*********************阴影
+
+    //*********************图片选择
+    compile (rootProject.ext.dependencies["PictureSelector"]) {
+        exclude group: 'com.android.support'
+    }
+    //*********************图片选择
+}  

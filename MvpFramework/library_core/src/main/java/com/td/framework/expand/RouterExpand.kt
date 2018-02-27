@@ -16,11 +16,11 @@ import com.td.framework.utils.amin.JumpAnimUtils
  * @param path 路由地址
  * @param pair  "key1" to "value1","key2" to "value2"
  */
-fun Activity.navigationActivityFromPair(path: String, vararg pair: Pair<String, Any>) {
+fun Activity.navigationActivityFromPair(path: String, vararg pair: Pair<String, Any>?) {
     RouterHelper.navigationActivityFromPair(path, Activity@ this, *pair)
 }
 
-fun Fragment.navigationActivityFromPair(path: String, vararg pair: Pair<String, Any>) {
+fun Fragment.navigationActivityFromPair(path: String, vararg pair: Pair<String, Any>?) {
     RouterHelper.navigationActivityFromPair(path, activity, *pair)
 }
 
@@ -28,7 +28,7 @@ fun Fragment.navigationActivityForResult(path: String, requestCode: Int) {
     RouterHelper.navigationActivityForResult(path, activity, requestCode)
 }
 
-fun Fragment.navigationActivityFromPairForResult(path: String, requestCode: Int, vararg pair: Pair<String, Any>) {
+fun Fragment.navigationActivityFromPairForResult(path: String, requestCode: Int, vararg pair: Pair<String, Any>?) {
     RouterHelper.navigationActivityFromPairForResult(path, activity, requestCode, *pair)
 }
 

@@ -38,9 +38,9 @@ abstract class TDBaseLoadingFragment : TDBaseFragment() {
         val mRootView = FrameLayout(mActivity)
         mRootView.layoutParams = CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         //其他布局
-        mLoadView = LayoutInflater.from(mActivity).inflate(R.layout.loding_base_loading, container, false)
-        mRetryView = LayoutInflater.from(mActivity).inflate(R.layout.loding_base_retry, container, false)
-        mEmptyView = LayoutInflater.from(mActivity).inflate(R.layout.loding_base_empty, container, false)
+        mLoadView = LayoutInflater.from(mActivity).inflate(getRootLoadingLayoutId(), container, false)
+        mRetryView = LayoutInflater.from(mActivity).inflate(getRootRetryLayoutId(), container, false)
+        mEmptyView = LayoutInflater.from(mActivity).inflate(getRootEmptyLayoutId(), container, false)
         mNoPermissionsView = LayoutInflater.from(mActivity).inflate(R.layout.loding_no_permissions, container, false)
         setRetryEvent(mRetryView)
         mLoadView?.visibility = View.GONE
@@ -54,6 +54,26 @@ abstract class TDBaseLoadingFragment : TDBaseFragment() {
         return mRootView
     }
 
+    /**
+     * 返回加载布局ID
+     */
+    protected open fun getRootLoadingLayoutId(): Int {
+        return R.layout.loding_base_loading
+    }
+
+    /**
+     * 返回重试布局
+     */
+    protected open fun getRootRetryLayoutId(): Int {
+        return R.layout.loding_base_retry
+    }
+
+    /**
+     * 返回空布局
+     */
+    protected open fun getRootEmptyLayoutId(): Int {
+        return R.layout.loding_base_empty
+    }
 
     /**
      * 重置视图

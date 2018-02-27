@@ -93,7 +93,7 @@ interface GeneralLoadDataContract {
                 //返回数据
                 v.refreshSuccess(list)
                 //计算是否有更多
-                if (list.isEmpty() || list.size != pageSize) {
+                if (list.isEmpty() || mPagerIndex >= it?.maxPage ?: mPagerIndex) {
                     v.noMore()
                 }
             }
@@ -124,7 +124,9 @@ interface GeneralLoadDataContract {
 
         /**
          * 提交数据
+         * //2018-2-27 不适用当前项目，添加了@Deprecated 注释
          */
+        @Deprecated("后端的数据结构不一样了，当前项目不适用！")
         fun <TRP : BaseParamsInfo> commitData(param: TRP) {
             //取消请求
             unSubscribe()

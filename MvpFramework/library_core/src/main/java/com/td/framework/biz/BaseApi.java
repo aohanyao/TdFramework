@@ -22,7 +22,7 @@ import retrofit2.converter.gson.CustGsonConverterFactory;
  * 基类  API
  */
 public class BaseApi {
-    private static NetProvider provider = null;
+    public static NetProvider provider = null;
     private Retrofit retrofit = null;
     private OkHttpClient client = null;
     private static final long connectTimeoutMills = 40 * 1000L;
@@ -91,7 +91,7 @@ public class BaseApi {
      * @return
      */
     public Retrofit getRetrofit(boolean useRx) {
-        checkProvider();
+//        checkProvider();
         if (retrofit == null) {
             Retrofit.Builder builder = new Retrofit.Builder()
                     .baseUrl(provider.configBaseUrl())
@@ -113,7 +113,7 @@ public class BaseApi {
      * @return
      */
     public Retrofit getRetrofit(boolean useRx, String baseUrl) {
-        checkProvider();
+//        checkProvider();
         if (retrofit == null) {
             Retrofit.Builder builder = new Retrofit.Builder()
                     .baseUrl(baseUrl)
@@ -133,7 +133,7 @@ public class BaseApi {
      * @return
      */
     private OkHttpClient getHttpClient() {
-        checkProvider();
+//        checkProvider();
         if (client == null) {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
 

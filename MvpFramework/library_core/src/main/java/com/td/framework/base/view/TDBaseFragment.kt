@@ -17,7 +17,10 @@ import com.td.framework.model.BaseIntentDto
 import com.td.framework.utils.T
 import com.td.framework.utils.amin.JumpAnimUtils
 import com.trello.rxlifecycle2.components.support.RxFragment
+import io.reactivex.FlowableTransformer
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
 
 
@@ -143,7 +146,7 @@ open class TDBaseFragment : RxFragment() {
 
      * @param msgText
      */
-    protected fun showTost(msgText: String) {
+    protected fun showToast(msgText: String) {
         T.showToast(mActivity, msgText)
     }
 
@@ -152,7 +155,7 @@ open class TDBaseFragment : RxFragment() {
 
      * @param msgId
      */
-    protected fun showTost(msgId: Int) {
+    protected fun showToast(msgId: Int) {
         T.showToast(mActivity, msgId)
     }
 
@@ -191,4 +194,16 @@ open class TDBaseFragment : RxFragment() {
         }
     }
 
+    /**
+     *  *  1. 线程切换
+     *  *  2. Rx生命周期绑定
+     * @return
+     */
+    protected fun <T> getCompose(): FlowableTransformer<T, T> {
+        return FlowableTransformer { observable ->
+            observable.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .compose<T>(bindToLifecycle())
+        }
+    }
 }

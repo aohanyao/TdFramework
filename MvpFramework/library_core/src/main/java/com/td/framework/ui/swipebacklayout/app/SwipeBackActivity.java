@@ -9,6 +9,10 @@ import com.td.framework.ui.swipebacklayout.Utils;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 
+/**
+ * 可滑动
+ * link:https://github.com/ikew0ng/SwipeBackLayout
+ */
 public class SwipeBackActivity extends RxAppCompatActivity implements SwipeBackActivityBase {
     private SwipeBackActivityHelper mHelper;
 

@@ -11,7 +11,7 @@ import com.td.framework.utils.L
  * @param T 返回数据类型
  * @param P presenter
  */
-abstract class MvpRequestDataBaseActivity<out T, out P> : MvpLoadingActivity<P>()
+abstract class MvpRequestDataBaseActivity<out P, out T> : MvpLoadingActivity<P>()
         , RequestDataContract.View<T> {
 
 

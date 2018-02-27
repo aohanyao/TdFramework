@@ -52,5 +52,5 @@
     <dimen name="dp_8">8dp</dimen>
     <dimen name="dp_12">12dp</dimen>
     <dimen name="dp_9">9dp</dimen>
-    <dimen name="margin">14dp</dimen>
+    <dimen name="margin">16dp</dimen>
 </resources>

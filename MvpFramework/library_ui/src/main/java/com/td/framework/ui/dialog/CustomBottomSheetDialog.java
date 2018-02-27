@@ -11,7 +11,6 @@ import com.td.framework.utils.ScreenUtils;
 
 /**
  * Created by jc on 2016/12/26 0026.
- * <p>Gihub https://github.com/aohanyao</p>
  * <p>解决弹窗的时候状态栏变黑的情况</p>
  */
 

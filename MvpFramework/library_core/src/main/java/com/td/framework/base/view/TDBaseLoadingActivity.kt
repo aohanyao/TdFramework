@@ -1,7 +1,6 @@
 package com.td.framework.base.view
 
 import android.os.Build
-import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.view.LayoutInflater
 import android.view.View
@@ -20,15 +19,10 @@ import com.td.framework.utils.statusbar.StatusBarUtil
  */
 
 abstract class TDBaseLoadingActivity : TDBaseActivity() {
-    private var mLoadView: View? = null
+    protected var mLoadView: View? = null
     private var mRetryView: View? = null
     private var mEmptyView: View? = null
     private var mNoPermissionsView: View? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
 
     /**
      * 初始化布局 增加加载框
@@ -46,11 +40,11 @@ abstract class TDBaseLoadingActivity : TDBaseActivity() {
     /**
      * 初始化
      */
-    protected fun initLoadView(view: View) {
+    protected open fun initLoadView(view: View) {
         //其他布局
-        mLoadView = LayoutInflater.from(mActivity).inflate(R.layout.loding_base_loading, null, false)
-        mRetryView = LayoutInflater.from(mActivity).inflate(R.layout.loding_base_retry, null, false)
-        mEmptyView = LayoutInflater.from(mActivity).inflate(R.layout.loding_base_empty, null, false)
+        mLoadView = LayoutInflater.from(mActivity).inflate(getRootLoadingLayoutId(), null, false)
+        mRetryView = LayoutInflater.from(mActivity).inflate(getRootRetryLayoutId(), null, false)
+        mEmptyView = LayoutInflater.from(mActivity).inflate(getRootEmptyLayoutId(), null, false)
         mNoPermissionsView = LayoutInflater.from(mActivity).inflate(R.layout.loding_no_permissions, null, false)
         setRetryEvent(mRetryView)
         resetLoadView()
@@ -58,9 +52,9 @@ abstract class TDBaseLoadingActivity : TDBaseActivity() {
         val frameLayout = FrameLayout(mActivity)
         val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            params.topMargin = DensityUtils.dp2px(mActivity, 44f) + StatusBarUtil.getStatusBarHeight(mActivity)//为了显示标题栏
+            params.topMargin = DensityUtils.dp2px(mActivity, getAppBarLayoutHeight()) + StatusBarUtil.getStatusBarHeight(mActivity)//为了显示标题栏
         } else {
-            params.topMargin = DensityUtils.dp2px(mActivity, 44f)//为了显示标题栏
+            params.topMargin = DensityUtils.dp2px(mActivity, getAppBarLayoutHeight())//为了显示标题栏
         }
         frameLayout.layoutParams = params
 
@@ -71,6 +65,26 @@ abstract class TDBaseLoadingActivity : TDBaseActivity() {
         (view as CoordinatorLayout).addView(frameLayout)
     }
 
+    /**
+     * 返回加载布局ID
+     */
+    protected open fun getRootLoadingLayoutId(): Int {
+        return R.layout.loding_base_loading
+    }
+
+    /**
+     * 返回重试布局
+     */
+    protected open fun getRootRetryLayoutId(): Int {
+        return R.layout.loding_base_retry
+    }
+
+    /**
+     * 返回空布局
+     */
+    protected open fun getRootEmptyLayoutId(): Int {
+        return R.layout.loding_base_empty
+    }
     /**
      * 重置视图
      */

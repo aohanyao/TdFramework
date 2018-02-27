@@ -36,8 +36,10 @@ public class ClearEditText extends AppCompatEditText implements
      * 控件是否有焦点
      */
     private boolean hasFoucs;
-    /**类型*/
-    private int type=Type.NONE;
+    /**
+     * 类型
+     */
+    private int type = Type.NONE;
 
     public ClearEditText(Context context) {
         this(context, null);
@@ -102,14 +104,14 @@ public class ClearEditText extends AppCompatEditText implements
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         this.hasFoucs = hasFocus;
-        if (hasFocus) {
-            setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-            KeyBoardUtils.foucsString(this);
-            setClearIconVisible(getText().length() > 0);
-        } else {
-            setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-            setClearIconVisible(false);
-        }
+//        if (hasFocus) {
+        setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        KeyBoardUtils.foucsString(this);
+        setClearIconVisible(getText().length() > 0);
+//        } else {
+//            setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+//            setClearIconVisible(false);
+//        }
     }
 
 
@@ -134,7 +136,7 @@ public class ClearEditText extends AppCompatEditText implements
         if (hasFoucs) {
             setClearIconVisible(s.length() > 0);
         }
-        if (type==Type.BANK_NUMBER){
+        if (type == Type.BANK_NUMBER) {
 
         }
     }
@@ -182,10 +184,14 @@ public class ClearEditText extends AppCompatEditText implements
     }
 
 
-    public interface Type{
-        /**无*/
-        int NONE=1;
-        /**银行卡号码*/
-        int BANK_NUMBER=1;
+    public interface Type {
+        /**
+         * 无
+         */
+        int NONE = 1;
+        /**
+         * 银行卡号码
+         */
+        int BANK_NUMBER = 1;
     }
 }

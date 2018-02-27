@@ -16,7 +16,7 @@ import java.util.Random;
 
 /**
  * <p>作者：jc on 2016/8/30 14:42</p>
- *
+ * <p>
  * <p>全局略缩</p>
  */
 public class BouncingJellyScroolView extends ScrollView {
@@ -24,7 +24,6 @@ public class BouncingJellyScroolView extends ScrollView {
     private int dowY;
     private int moveX;
     private int moveY;
-    private float bouncingOffset = 2850f;
     private float v;
     private ValueAnimator animator;
     private boolean isTop = true;
@@ -33,6 +32,14 @@ public class BouncingJellyScroolView extends ScrollView {
     private OnBouncingJellyListener onBouncingJellyListener;
     private boolean isBouncingJelly;
     private Random mRandom;
+    /**
+     * 弹跳偏移
+     */
+    private float bouncingOffset = 2850f;
+    /**
+     * 弹跳系数
+     */
+    private float BOUNCE_COEFFICIENT = 0.4f;
 
     public BouncingJellyScroolView(Context context) {
         super(context);
@@ -123,8 +130,8 @@ public class BouncingJellyScroolView extends ScrollView {
                 moveY = (int) event.getRawY();
                 int abs = moveY - dowY;
                 v = (Math.abs(abs) / bouncingOffset);
-                if (v > 0.3f) {
-                    v = 0.3f;
+                if (v > BOUNCE_COEFFICIENT) {
+                    v = BOUNCE_COEFFICIENT;
                 }
                 if (abs > 20 && getScrollY() == 0) {
                     isTop = true;
@@ -193,14 +200,14 @@ public class BouncingJellyScroolView extends ScrollView {
         /**
          * 顶部弹跳
          *
-         * @param bouncingJelly
+         * @param bouncingJelly 弹跳系数
          */
         void onBouncingJellyTop(float bouncingJelly);
 
         /**
          * 底部弹跳
          *
-         * @param bouncingJelly
+         * @param bouncingJelly 弹跳系数
          */
         void onBouncingJellyBottom(float bouncingJelly);
     }

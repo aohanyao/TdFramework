@@ -95,7 +95,10 @@ object RouterHelper : NavigationCallback {
      * 传递参数
      * 有返回值
      */
-    fun navigationActivityFromPairForResult(path: String, mActivity: Activity?, requestCode: Int, vararg pair: Pair<String, Any>) {
+    fun navigationActivityFromPairForResult(path: String,
+                                            mActivity: Activity?,
+                                            requestCode: Int,
+                                            vararg pair: Pair<String, Any>?) {
         //创建路由
         val router = buildRouterForParams(path, *pair)
         //导航
@@ -105,7 +108,7 @@ object RouterHelper : NavigationCallback {
     /**
      * 传递参数
      */
-    fun navigationActivityFromPair(path: String, mActivity: Activity?, vararg pair: Pair<String, Any>) {
+    fun navigationActivityFromPair(path: String, mActivity: Activity?, vararg pair: Pair<String, Any>?) {
         navigationActivityFromPairForResult(path, mActivity, -1, *pair)
     }
 
@@ -127,7 +130,7 @@ object RouterHelper : NavigationCallback {
     /**
      * 创建携带参数的路由
      */
-    private fun buildRouterForParams(path: String, vararg params: Pair<String, Any>): Postcard {
+    private fun buildRouterForParams(path: String, vararg params: Pair<String, Any>?): Postcard {
         //创建路由
         val router = ARouter.getInstance()
                 .build(path)
@@ -136,9 +139,9 @@ object RouterHelper : NavigationCallback {
 
         //获取参数，创建 key value
         params.forEach {
-            val value = it.second
+            val value = it?.second
             when (value) {
-                null -> router.withSerializable(it.first, null as Serializable?)
+                null -> router.withSerializable(it?.first, null as Serializable?)
                 is Int -> router.withInt(it.first, value)
                 is Long -> router.withLong(it.first, value)
                 is CharSequence -> router.withCharSequence(it.first, value)

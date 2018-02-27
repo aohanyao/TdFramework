@@ -46,13 +46,6 @@ public class ShareHelper {
         mDatas.add(new ShareInfo(R.mipmap.share_qq_icon, "QQ好友"));
     }
 
-    public void showDialog(String mMsg) {
-        showDialog();
-    }
-
-    public void showDialog(String mTitle, String mMsg, String mConfirmText) {
-        showDialog();
-    }
 
     public void showDialog() {
         View mDialogView = LayoutInflater.from(mContext).inflate(R.layout.dialog_share_layout, null);

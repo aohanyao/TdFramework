@@ -10,7 +10,7 @@ import com.td.framework.mvp.model.BaseParamsInfo
  * <b>说明<b><br/>
  * <li>搜索相关的基类fragment</li>
  */
-abstract class TdSearchBaseFragment<out T, P> : MvpRequestDataBaseFragment<T, P>(), SearchInf {
+abstract class TdSearchBaseFragment< P, out T> : MvpRequestDataBaseFragment<P, T>(), SearchInf {
 
     /**
      * 设置参数

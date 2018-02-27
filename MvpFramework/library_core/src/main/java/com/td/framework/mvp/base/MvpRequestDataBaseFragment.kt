@@ -11,7 +11,7 @@ import com.td.framework.utils.L
  * @param T 返回数据类型
  * @param P presenter
  */
-abstract class MvpRequestDataBaseFragment<out T, P> : MvpBaseFragment<P>()
+abstract class MvpRequestDataBaseFragment< P,out T> : MvpBaseFragment<P>()
         , RequestDataContract.View<T> {
 
     override fun requestResultIsEmpty() {

@@ -206,6 +206,8 @@ abstract class MvpBaseActivity<P> : TDBaseActivity(), DialogInterface.OnCancelLi
         mDialogHelper.showConfirmDialog("", message, confirmText, cancelText, onDialogConfirmListener, null)
     }
 
+
+
     fun onFail(error: NetError) {
         handlerFail(error)
     }

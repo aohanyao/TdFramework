@@ -3,10 +3,12 @@ package com.td.framework.mvp.base
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemChildClickListener
+import com.chad.library.adapter.base.loadmore.LoadMoreView
 import com.td.framework.biz.NetError
 import com.td.framework.global.BasicAdapterHelper
 import com.td.framework.mvp.contract.GeneralLoadDataContract
@@ -25,9 +27,11 @@ import java.util.*
 abstract class MvpLoadListDataBaseActivity<out P : GeneralLoadDataContract.GeneralLoadDataPresenter<*, *, *>, T> :
         MvpLoadingActivity<P>(), GeneralLoadDataContract.GeneralLoadDataView<T>,
         BaseQuickAdapter.RequestLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
-    //数据对象
+    /**数据对象*/
     protected var mDatas: MutableList<T> = ArrayList()
-    protected var mAdapter: BaseQuickAdapter<T, *>? = getAdapter()
+    protected val mAdapter: BaseQuickAdapter<T, *>? by lazy {
+        getAdapter()
+    }
     //参数对象
     protected val mParam: BaseParamsInfo by lazy { getParam() }
 
@@ -38,6 +42,7 @@ abstract class MvpLoadListDataBaseActivity<out P : GeneralLoadDataContract.Gener
     override fun onStart() {
         super.onStart()
         if (isCreate) {
+            showLoading()
             initAdapter()
             isCreate = false
             p?.refreshData(mParam)
@@ -51,16 +56,19 @@ abstract class MvpLoadListDataBaseActivity<out P : GeneralLoadDataContract.Gener
     /**
      * 初始化适配器
      */
-    protected fun initAdapter() {
+    protected open fun initAdapter() {
         //适配器
         mAdapter?.apply {
-            setLoadMoreView(CustomLoadMoreView())
-            setOnLoadMoreListener(this@MvpLoadListDataBaseActivity)
-            BasicAdapterHelper.initAdapterVertical(mActivity, mAdapter, getRecyclerView(), getEmptyTip())
+            getLoadMoreView()?.apply {
+                setLoadMoreView(this)
+                setOnLoadMoreListener(this@MvpLoadListDataBaseActivity)
+            }
+            BasicAdapterHelper.initAdapter(mActivity, mAdapter, getRecyclerView(), getRecyclerViewOrientation(), getEmptyTip())
             getRecyclerView()?.adapter = this
             getHeaderView()?.apply {
                 addHeaderView(this)
             }
+            setHeaderAndEmpty(true)
         }
         //刷新
         (getSwipeRefreshLayout() as? SwipeRefreshLayout?)?.setOnRefreshListener(this)
@@ -71,6 +79,24 @@ abstract class MvpLoadListDataBaseActivity<out P : GeneralLoadDataContract.Gener
                 onRecyclerViewItemChildClick(view, position, mDatas[position])
             }
         })
+    }
+
+
+    /**
+     * @return  类型  <p>
+     *     Vertical = 1
+     *     Horizontal =2
+     */
+    protected open fun getRecyclerViewOrientation(): Int {
+        return LinearLayoutManager.VERTICAL
+    }
+
+
+    /**
+     * 返回加载布局
+     */
+    protected open fun getLoadMoreView(): LoadMoreView? {
+        return CustomLoadMoreView()
     }
 
 
@@ -106,7 +132,11 @@ abstract class MvpLoadListDataBaseActivity<out P : GeneralLoadDataContract.Gener
     }
 
     override fun onLoadMoreRequested() {
-        p?.loadMoreData(mParam)
+        if (getMock()) {
+            noMore()
+        } else {
+            p?.loadMoreData(mParam)
+        }
     }
 
     override fun commitDataSuccess() {
@@ -146,6 +176,13 @@ abstract class MvpLoadListDataBaseActivity<out P : GeneralLoadDataContract.Gener
     protected abstract fun onRecyclerViewItemChildClick(view: View, position: Int, data: T)
 
     /**
+     * 设置是否模拟
+     */
+    protected open fun getMock(): Boolean {
+        return false
+    }
+
+    /**
      * 获取内容为空的提示
 
      * @return
@@ -162,6 +199,10 @@ abstract class MvpLoadListDataBaseActivity<out P : GeneralLoadDataContract.Gener
     }
 
     override fun onRefresh() {
-        p?.refreshData(mParam)
+        if (getMock()) {
+            (getSwipeRefreshLayout() as? SwipeRefreshLayout?)?.isRefreshing = false
+        } else {
+            p?.refreshData(mParam)
+        }
     }
 }

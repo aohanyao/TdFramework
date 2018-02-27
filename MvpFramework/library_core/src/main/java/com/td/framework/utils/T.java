@@ -80,7 +80,22 @@ public class T {
         }
 
     }
+    public static void showToast(Context context, String text,int backgroudColor) {
+        mContext = context;
+        LayoutInflater inflate = (LayoutInflater)
+                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflate.inflate(R.layout.layout_toast, null);
+        TextView tvMsg = (TextView) layout.findViewById((R.id.tv_msg));
+        tvMsg.setText(text);
+        if (!TextUtils.isEmpty(text)) {
+            Toast toast = new Toast(mContext);
+            toast.setGravity(Gravity.BOTTOM, 0, 150);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.setView(layout);
+            toast.show();
+        }
 
+    }
 
 
     /**

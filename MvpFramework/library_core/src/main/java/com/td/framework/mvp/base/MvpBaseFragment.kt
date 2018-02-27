@@ -69,7 +69,7 @@ abstract class MvpBaseFragment<P> : TDBaseLoadingFragment(),
 
      * @return
      */
-    protected abstract fun newP(): P
+    protected abstract fun newP(): P?
 
     /**
      * 失败 信息
@@ -113,7 +113,7 @@ abstract class MvpBaseFragment<P> : TDBaseLoadingFragment(),
     protected fun handlerComplete(msg: String?) {
         dismissDialog()
         if (!TextUtils.isEmpty(msg)) {
-            showTost(msg!!)
+            showToast(msg!!)
         }
     }
 

@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
 android {
     compileSdkVersion 26
 
@@ -50,6 +49,10 @@ artifacts {
     archives sourcesJar
     archives javadocJar
 }
+
+
+
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     implementation rootProject.ext.dependencies["design"]

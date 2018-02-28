@@ -3,13 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MvpFramework.iml" filepath="$PROJECT_DIR$/MvpFramework.iml" />
-      <module fileurl="file://D:\Work Space\GitCode\MvpFramework\MvpFramework\MvpFramework.iml" filepath="D:\Work Space\GitCode\MvpFramework\MvpFramework\MvpFramework.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://D:\Work Space\GitCode\MvpFramework\MvpFramework\app\app.iml" filepath="D:\Work Space\GitCode\MvpFramework\MvpFramework\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library_core/library_core.iml" filepath="$PROJECT_DIR$/library_core/library_core.iml" />
-      <module fileurl="file://D:\Work Space\GitCode\MvpFramework\MvpFramework\library_net\library_net.iml" filepath="D:\Work Space\GitCode\MvpFramework\MvpFramework\library_net\library_net.iml" />
       <module fileurl="file://$PROJECT_DIR$/library_ui/library_ui.iml" filepath="$PROJECT_DIR$/library_ui/library_ui.iml" />
-      <module fileurl="file://D:\Work Space\GitCode\MvpFramework\MvpFramework\tdframework\tdframework.iml" filepath="D:\Work Space\GitCode\MvpFramework\MvpFramework\tdframework\tdframework.iml" />
     </modules>
   </component>
 </project>

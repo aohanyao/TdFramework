@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.github.dcendents.android-maven'
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
@@ -16,6 +17,7 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+
 //    buildTypes {
 //        release {
 //            minifyEnabled false
@@ -26,6 +28,31 @@ android {
 
 }
 
+// 打包源码jar
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+
+// 打包文档jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation rootProject.ext.dependencies["design"]
@@ -33,7 +60,7 @@ dependencies {
 
 
     compile rootProject.ext.dependencies["eventbus"]
-    implementation (rootProject.ext.dependencies["glide"]){
+    implementation(rootProject.ext.dependencies["glide"]) {
         exclude group: 'com.android.support'
     }
 
@@ -86,7 +113,7 @@ dependencies {
     //*********************阴影
 
     //*********************图片选择
-    compile (rootProject.ext.dependencies["PictureSelector"]) {
+    compile(rootProject.ext.dependencies["PictureSelector"]) {
         exclude group: 'com.android.support'
     }
     //*********************图片选择

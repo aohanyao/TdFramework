@@ -1,0 +1,120 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'kotlin-android-extensions'
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    defaultConfig {
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode 110
+        versionName "v0.11alpha"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+        //X5兼容64位手机
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    // 打包源码jar
+    task sourcesJar(type: Jar) {
+        from android.sourceSets.main.java.srcDirs
+        classifier = 'sources'
+    }
+    //编译groovy代码时采用 UTF-8
+    tasks.withType(GroovyCompile) {
+        groovyOptions.encoding = "MacRoman"
+    }
+
+    //编译JAVA文件时采用UTF-8
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+
+    task javadoc(type: Javadoc) {
+        failOnError false
+        source = android.sourceSets.main.java.sourceFiles
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+        classpath += configurations.compile
+    }
+
+    // 打包文档jar
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
+    }
+}
+
+
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    implementation rootProject.ext.dependencies["design"]
+    api rootProject.ext.dependencies["gson"]
+
+
+    api rootProject.ext.dependencies["eventbus"]
+    api(rootProject.ext.dependencies["glide"]) {
+        exclude group: 'com.android.support'
+    }
+
+    api rootProject.ext.dependencies["multidex"]
+    api rootProject.ext.dependencies["Luban"]
+
+    /**路由*/
+    api rootProject.ext.dependencies["arouter-api"]
+    /**友盟*/
+    implementation 'com.umeng.analytics:analytics:6.1.4'
+
+    //*********************Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    //*********************Kotlin
+
+    //*********************网络相关 RX
+    api rootProject.ext.dependencies["rxkotlin2"]
+    api rootProject.ext.dependencies["rxpermissions2"]
+
+    api rootProject.ext.dependencies["rxjava2"]
+    api rootProject.ext.dependencies["retrofit2"]
+    api rootProject.ext.dependencies["retrofit-adapter-rxjava2"]
+    api rootProject.ext.dependencies["retrofit-converter-gson2"]
+    api rootProject.ext.dependencies["okhttp3-logging-interceptor"]
+    api rootProject.ext.dependencies["rxandroid2"]
+    api rootProject.ext.dependencies["okhttp3"]
+
+    api rootProject.ext.dependencies["rxlifecycle2"]
+    api rootProject.ext.dependencies["rxlifecycle-components2"]
+    api rootProject.ext.dependencies["rxlifecycle-android2"]
+    //*********************网络相关 RX
+    //反射
+//    api rootProject.ext.dependencies["kotlin-reflect"]
+
+    //*********************UI组件
+    api project(':library_ui')
+    //*********************UI组件
+
+
+
+}

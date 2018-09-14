@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--整个APP的颜色，基础样式设置，请覆写这个文件内的配置-->
+
+
+    <!--标题栏 导航文字颜色-->
+    <color name="ToolbarNavTextColor">#fff</color>
+    <!--标题栏 标题文字颜色-->
+    <color name="ToolbarTitleTextColor">#fff</color>
+    <!--标题栏 阴影线颜色-->
+    <color name="ToolbarLineColor">#eeeeee</color>
+    <!--导航文字大小-->
+    <dimen name="ToolbarNavTextSize">15sp</dimen>
+    <!--标题文字大小-->
+    <dimen name="ToolbarTitleTextSize">18sp</dimen>
+    <!--标题栏的高度-->
+    <dimen name="AppBarLayoutHeight">44dp</dimen>
+    <!--导航文字距离左边的边距-->
+    <dimen name="ToolbarNavTextMarginLeft">22dp</dimen>
+
+
+    <!--标题栏的样式-->
+    <style name="BaseToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <!--内容距离开始 边距-->
+        <item name="contentInsetStart">14dp</item>
+        <!--内容距离 导航按钮 边距-->
+        <item name="contentInsetStartWithNavigation">14dp</item>
+        <!--使自定义view可以贴左右的边，多数版本的系统不要下面两句也可以，但少量版本必须加下面的两句-->
+        <item name="android:paddingLeft">@dimen/toolbar_left_margin</item>
+        <!--右内边距-->
+        <item name="android:paddingRight">0dp</item>
+        <!--最小高度-->
+        <item name="android:minHeight">@dimen/toolbar_height</item>
+        <!--高度-->
+        <item name="android:layout_height">@dimen/toolbar_height</item>
+        <!--id-->
+        <item name="android:id">@id/base_toolbar</item>
+        <!--宽度-->
+        <item name="android:layout_width">match_parent</item>
+        <item name="actionMenuTextColor">#000</item>
+    </style>
+
+    <style name="BaseToolbarRootStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/toolbar_height</item>
+        <item name="android:id">@id/base_root_toolbar</item>
+    </style>
+
+    <!--标题栏返回按钮样式-->
+    <style name="mToolbarNavigationButtonStyle" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:minWidth">16dp</item>
+    </style>
+
+    <!--<drawable name=""-->
+    <!--Toast-->
+    <color name="ToastBackgroundColor">#88000000</color>
+    <!--Toast-->
+</resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SettingItemView">
+        <attr name="left_icon" format="reference" />
+        <attr name="background" format="reference" />
+        <attr name="right_icon_visible" format="boolean" />
+        <attr name="right_text" format="string" />
+        <attr name="right_arrow_visible" format="boolean" />
+        <attr name="top_line_visible" format="boolean" />
+        <attr name="top_line_color" format="color" />
+        <attr name="bottom_line_visible" format="boolean" />
+        <attr name="bottom_line_color" format="color" />
+        <attr name="line_height" format="dimension" />
+        <attr name="line_text" format="string" />
+    </declare-styleable>
+    <declare-styleable name="SwitchView">
+        <attr name="off_text" format="string" />
+        <attr name="on_text" format="string" />
+        <attr name="on_text_color" format="color" />
+        <attr name="off_text_color" format="color" />
+        <attr name="background_color" format="color" />
+        <attr name="on_background_color" format="color" />
+        <attr name="off_background_color" format="color" />
+        <attr name="text_size" format="dimension" />
+        <attr name="radius" format="dimension" />
+        <attr name="front_ground_width" format="dimension" />
+    </declare-styleable>
+
+    <attr name="indexBarTextSize" format="dimension" />
+
+    <declare-styleable name="IndexBar">
+        <attr name="indexBarTextSize" />
+        <attr name="indexBarPressBackground" format="color" />
+        <attr name="indexBarTextColor" format="color" />
+    </declare-styleable>
+    <declare-styleable name="SwitchButtonView">
+        <attr name="hasShadow" format="boolean" />
+        <attr name="primaryColor" format="color" />
+        <attr name="primaryColorDark" format="color" />
+        <attr name="isOpened" format="boolean" />
+    </declare-styleable>
+
+</resources>

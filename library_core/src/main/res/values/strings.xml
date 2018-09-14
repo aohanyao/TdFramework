@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sure">确定</string>
+    <string name="phone">电话</string>
+    <string name="please_input_phone_number">请输入手机号码</string>
+    <string name="address">地址</string>
+    <string name="please_select_region">请选择所在地区</string>
+    <string name="house_number">门牌号</string>
+    <string name="set_default_address">设为默认地址</string>
+    <string name="bank_info">有什么话请在此留言</string>
+    <string name="sir">先生</string>
+    <string name="lady">女士</string>
+    <string name="save_success">保存成功</string>
+    <string name="save_failure">保存失败</string>
+    <string name="receiver_name_not_empty">收货人姓名不能为空</string>
+    <string name="phone_not_empty">手机号码不能为空</string>
+    <string name="delete">删除</string>
+</resources>

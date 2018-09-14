@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:typeface">sans</item>
+        <!--toolbar内的控件（自定义的或者系统预置的如标题）距离NavigationIcon和屏幕左边的距离，类似marginStart-->
+        <item name="actionMenuTextColor">#999999</item>
+
+    </style>
+
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+    <style name="TranThem" parent="AppTheme.ToolbarHeight">
+        <!--透明样式-->
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- Note that we use the base animation style here (that is no
+             animations) because we really have no idea how this kind of
+             activity will be used. -->
+        <!--<item name="windowAnimationStyle">@style/Animation</item>-->
+    </style>
+
+    <style name="AppBarLayoutStyle">
+        <!--标题栏样式-->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/AppBarLayoutHeight</item>
+        <item name="android:theme">@style/AppTheme.AppBarOverlay</item>
+        <!--这里设置 标题栏的颜色-->
+        <item name="android:id">@id/app_bar_layout</item>
+    </style>
+
+    <style name="ToolBarNavTextStyle">
+        <!--标题栏返回文字样式-->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">@dimen/ToolbarNavTextMarginLeft</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:textColor">@color/ToolbarNavTextColor</item>
+        <item name="android:textSize">@dimen/ToolbarNavTextSize</item>
+        <item name="android:id">@id/toolbar_nav_text</item>
+    </style>
+
+    <style name="ToolBarRightActionStyle" parent="ToolBarTitleStyle">
+        <!--标题栏 右边Action文字样式-->
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">right</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingRight">@dimen/dp_12</item>
+        <item name="android:textColor">@drawable/toolbar_title_determine_textcolor</item>
+        <item name="android:textSize">@dimen/title_right</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="ToolBarNavTextStyle.Not">
+        <!--标题栏返回按钮没有样式-->
+        <item name="android:layout_height">?actionBarSize</item>
+        <item name="android:layout_marginLeft">36dp</item>
+    </style>
+
+    <style name="ToolBarStyle">
+        <!--标题栏样式-->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/AppBarLayoutHeight</item>
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
+
+    <style name="AppTheme.ToolbarHeight">
+        <!--修改了标题栏默认样式的样式
+        修改了返回按钮的边距
+        -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="toolbarNavigationButtonStyle">@style/mToolbarNavigationButtonStyle</item>
+        <!--NavigationIcon的宽度-->
+        <item name="toolbarStyle">@style/BaseToolbarStyle</item>
+    </style>
+
+    <style name="AppTheme.NotToolbarHeight">
+        <!--不更改标题栏的默认样式-->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="DialogCallActionStyle">
+        <!--弹窗-->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_gravity">bottom|end</item>
+        <item name="android:background">#fff</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">#03a4f9</item>
+        <item name="android:textSize">15sp</item>
+
+    </style>
+
+
+    <style name="settint_item_layout">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:clickable">true</item>
+        <!--<item name="android:background">?android:attr/selectableItemBackground</item>-->
+        <item name="android:background">#fff</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+
+    <style name="ToolBarTitleStyle">
+        <!--标题栏 标题样式-->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/ToolbarTitleTextColor</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@null</item>
+        <item name="android:textSize">@dimen/ToolbarTitleTextSize</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:id">@id/tv_toolbar_title</item>
+    </style>
+
+    <style name="SettingTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_height">48dp</item>
+    </style>
+
+    <style name="arror_setting">
+        <item name="android:layout_width">14dp</item>
+        <item name="android:layout_height">14dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="AppAlertDialogStyle" parent="AlertDialog.AppCompat">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="DialogStyle.Helper" parent="AlertDialog.AppCompat.Light">
+        <!--<item name="android:background">@color/white</item>-->
+        <!--<item name="android:textColor">@color/black</item>-->
+        <!--<item name="colorAccent">#03a9f4</item>-->
+    </style>
+
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Used for the buttons -->
+        <item name="colorAccent">#FFC107</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <!-- Used for the background -->
+        <item name="android:background">#4CAF50</item>
+    </style>
+
+    <style name="ShareAppLainearStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="ShareAppImageStyle">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
+    </style>
+
+    <style name="ShareAppTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:textColor">#333</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+    <!--所有基础页面布局的样式-->
+
+    <style name="BaseRootLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/background</item>
+    </style>
+
+
+    <declare-styleable name="ScaleImageViewStyle">
+        <attr name="ratio" format="float"/>
+    </declare-styleable>
+
+
+</resources>

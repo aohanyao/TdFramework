@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <declare-styleable name="HorizontalChart">
-        <attr name="chart_text_size" format="integer"/>
-        <attr name="chart_text_color" format="color"/>
-    </declare-styleable>
-</resources>

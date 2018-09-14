@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PressTextView">
+        <!--圆角-->
+        <attr name="Radius" format="dimension" />
+        <!--按下背景颜色-->
+        <attr name="PressBackgroundColor" format="color" />
+        <!--正常背景颜色-->
+        <attr name="NormalBackgroundColor" format="color" />
+        <!--禁用状态颜色-->
+        <attr name="DisableBackgroundColor" format="color" />
+        <!--选中情况下的颜色-->
+        <attr name="SelectBackgroundColor" format="color" />
+
+        <!--按下字体颜色-->
+        <attr name="PressTextColor" format="color" />
+        <!--正常字体颜色-->
+        <attr name="NormalTextColor" format="color" />
+        <!--禁用状态字体颜色-->
+        <attr name="DisableTextColor" format="color" />
+        <!--选中情况下字体的颜色-->
+        <attr name="SelectTextColor" format="color" />
+
+    </declare-styleable>
+</resources>

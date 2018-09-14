@@ -1,0 +1,4 @@
+include ':app',
+        ':library_core',
+        ':library_ui',
+        ':library_utils'
